@@ -1,0 +1,55 @@
+{
+  "@@locale": "en",
+  "appName": "Naked Truth",
+  "notSpecified": "Not specified",
+  "category": "Category",
+  "adult": "Adult",
+  "couples": "Couples",
+  "friends": "Friends",
+
+  "buttonNext": "Next",
+  "buttonStart": "Start",
+
+  "enableLocationTitle": "Enable Location",
+  "enableLocationText": "To see the distance to your friend, please enable location services on your device.",
+  "openSettingsAction": "Open Settings",
+  "locationAccessTitle": "Location Access",
+  "locationAccessText": "To show the distance between you and your friend, the app needs access to your location.",
+  "okAction": "OK",
+  "locationAccessNotGranted": "Location access not granted — distance feature will be limited.",
+  "grantLocationAccess": "Grant location access",
+  "loginFailed": "Login failed",
+  "signIn": "Sign In",
+  "signingIn": "Signing in...",
+  "welcome": "Welcome!'",
+
+  "signInToStart": "Sign in to start.",
+
+
+
+  "onboardingFirstTitle": "Question for Every Mood",
+  "onboardingFirstText": "Turn any moment into a deeper, more meaningful conversation",
+  "onboardingSecondTitle": "Enjoying MustHave Talks?",
+  "onboardingSecondText": "If you like what you see, tap ★★★★★ and help other couples find us!",
+  "onboardingThirdTitle": "Pick Your Perfect Deck",
+  "onboardingThirdText": "40 + themed question sets—from cozy nights-in to road-trip laughs",
+  "onboardingFourthTitle": "Keep the Spark Alive",
+  "onboardingFourthText": "Get a fresh question every day, save favorites, and track your journey together",
+
+  "settings": "Settings",
+  "accessAllFeatures": "Access all features",
+  "upgradeToPremium": "Upgrade to Premium",
+  "unlock": "UNLOCK",
+  "getPremium": "Get Premium",
+  "restorePurchase": "Restore Purchase",
+  "addFriend": "Add friend",
+  "myFriend": "My friend",
+  "usePremiumCode": "Use premium code",
+  "other": "Other",
+  "rateThisApp": "Rate this app",
+  "shareApp": "Share App",
+  "termsAndConditions": "Terms and Conditions",
+  "privacyPolicy": "Privacy Policy",
+  "purchaseRestored": "Your purchase has been successfully restored.",
+  "purchaseRestoreFailed": "Failed to restore your purchase. Please try again later."
+}

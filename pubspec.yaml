@@ -1,0 +1,216 @@
+name: naked_truth
+description: "Card game"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.3.5
+  flutter_svg: ^2.0.7
+  provider: ^6.0.5
+  flutter_keyboard_visibility: ^6.0.0
+  grouped_list: ^5.1.2
+  image: ^4.1.3
+  path_provider: ^2.1.1
+  sqlite3: ^2.7.6
+  path: ^1.9.0
+  flutter_bloc: ^8.1.6
+  drift: ^2.27.0
+  sqlite3_flutter_libs: ^0.5.34
+  url_launcher: ^6.3.1
+  equatable: ^2.0.7
+
+  bloc: ^8.1.4
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.6
+  in_app_review: ^2.0.10
+  share_plus: ^11.0.0
+  geolocator: ^13.0.2
+  in_app_purchase: ^3.2.3
+
+
+  #  firebase
+  firebase_core: ^4.0.0
+  firebase_auth: ^6.0.1
+  cloud_firestore: ^6.0.0
+  firebase_storage: ^13.0.0
+
+  google_sign_in: ^7.1.1
+  sign_in_with_apple: ^7.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  drift_dev: ^2.27.0
+  build_runner: ^2.5.4
+  flutter_launcher_icons: ^0.14.4
+  sqflite_common_ffi: ^2.3.4+3
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/app_icon.png"
+
+flutter_native_splash:
+  color: "#2A0E62"
+  image: assets/icon/app_icon.png
+  android: true
+  ios: true
+
+flutter:
+
+  uses-material-design: true
+  generate: true
+
+  fonts:
+    - family: Bitter
+      fonts:
+        - asset: fonts/Bitter-Black.ttf
+        - asset: fonts/Bitter-BlackItalic.ttf
+        - asset: fonts/Bitter-Bold.ttf
+        - asset: fonts/Bitter-BoldItalic.ttf
+        - asset: fonts/Bitter-ExtraBoldItalic.ttf
+        - asset: fonts/Bitter-ExtraLight.ttf
+        - asset: fonts/Bitter-ExtraLightItalic.ttf
+        - asset: fonts/Bitter-Italic.ttf
+        - asset: fonts/Bitter-Italic-VariableFont_wght.ttf
+        - asset: fonts/Bitter-Light.ttf
+        - asset: fonts/Bitter-LightItalic.ttf
+        - asset: fonts/Bitter-Medium.ttf
+        - asset: fonts/Bitter-MediumItalic.ttf
+        - asset: fonts/Bitter-Regular.ttf
+        - asset: fonts/Bitter-SemiBold.ttf
+        - asset: fonts/Bitter-SemiBoldItalic.ttf
+        - asset: fonts/Bitter-Thin.ttf
+        - asset: fonts/Bitter-ThinItalic.ttf
+        - asset: fonts/Bitter-VariableFont_wght.ttf
+
+  assets:
+    #    localization
+    - lib/l10n/app_en.arb
+    - lib/l10n/app_uk.arb
+
+    - assets/onboarding_image/onboarding1.png
+    - assets/onboarding_image/onboarding2.png
+    - assets/onboarding_image/onboarding3.png
+    - assets/onboarding_image/onboarding4.png
+    - assets/icon/app_icon.png
+    - assets/icon/crown.png
+    - assets/icon/setting.png
+    - assets/icon/adult.png
+    - assets/icon/couples.png
+    - assets/icon/friends.png
+    - assets/icon/friend.png
+    - assets/icon/add_friend.png
+
+    - assets/icon/arrow_back.png
+    - assets/icon/arrow_forward.png
+    - assets/icon/settings/crown.png
+    - assets/icon/settings/privace.png
+    - assets/icon/settings/rate.png
+    - assets/icon/settings/restore.png
+    - assets/icon/settings/share.png
+    - assets/icon/settings/terms.png
+
+    - assets/icon/card/After Dark Fights.png
+    - assets/icon/card/Bedroom Habits.png
+    - assets/icon/card/Dirty Would You Rather.png
+    - assets/icon/card/Fantasy Confessions.png
+    - assets/icon/card/Fetishes You Don’t Talk About.png
+    - assets/icon/card/First Time Stories.png
+    - assets/icon/card/Forbidden Thoughts.png
+    - assets/icon/card/I’d Try It If You Would.png
+    - assets/icon/card/Kinks & Curiosities.png
+    - assets/icon/card/Secret Crushes.png
+    - assets/icon/card/Sex vs. Intimacy.png
+    - assets/icon/card/Spicy Truth or Dare.png
+    - assets/icon/card/The Morning After.png
+    - assets/icon/card/The Taboo Zone.png
+    - assets/icon/card/Turn Ons - Turn Offs.png
+    - assets/icon/card/Affection & Rituals.png
+    - assets/icon/card/Appreciation & Insecurity.png
+    - assets/icon/card/Big Questions & Beliefs.png
+    - assets/icon/card/Boundaries & Trust.png
+    - assets/icon/card/Conflict & Communication.png
+    - assets/icon/card/Daily Life Together.png
+    - assets/icon/card/History & Past Loves.png
+    - assets/icon/card/Living Together.png
+    - assets/icon/card/Love Languages & Expression.png
+    - assets/icon/card/Must-Have Questions Before Starting a Relationship.png
+    - assets/icon/card/Romantic Fantasies.png
+    - assets/icon/card/Secrets & Openness.png
+    - assets/icon/card/Unasked Questions.png
+    - assets/icon/card/Visions of the Future.png
+    - assets/icon/card/What-Ifs & Imagination.png
+    - assets/icon/card/Alternate Universes.png
+    - assets/icon/card/Cringe Archive.png
+    - assets/icon/card/Dark Thoughts & Weird Vibes.png
+    - assets/icon/card/Do You Even Know Me.png
+    - assets/icon/card/Favorite Glitches in the Friendship Matrix.png
+    - assets/icon/card/Forgive & Forget (or Not).png
+    - assets/icon/card/If We Were….png
+    - assets/icon/card/Lowkey Roasts.png
+    - assets/icon/card/Our Origin Story.png
+    - assets/icon/card/Shared Chaos.png
+    - assets/icon/card/Turning Points.png
+    - assets/icon/card/Unfiltered Games.png
+    - assets/icon/card/Unrealistic Life Plans.png
+    - assets/icon/card/What You Dont Know About Me.png
+    - assets/icon/card/Would You Still Be Friends If….png
+
+
+    - assets/source/
+    - assets/source/01/en/adult/After Dark Fights/After Dark Fights.txt
+    - assets/source/01/en/adult/Bedroom Habits/Bedroom Habits.txt
+    - assets/source/01/en/adult/Dirty Would You Rather/Dirty Would You Rather(2).txt
+    - assets/source/01/en/adult/Fantasy Confessions/Fantasy Confessions.txt
+    - assets/source/01/en/adult/Fetishes You Don’t Talk About/Fetishes You Don’t Talk About.txt
+    - assets/source/01/en/adult/First Time Stories/First Time Stories(1).txt
+    - assets/source/01/en/adult/Forbidden Thoughts/Forbidden Thoughts.txt
+    - assets/source/01/en/adult/I’d Try It If You Would/I’d Try It If You Would.txt
+    - assets/source/01/en/adult/Kinks & Curiosities/Kinks & Curiosities.txt
+    - assets/source/01/en/adult/Secret Crushes/Secret Crushes(2).txt
+    - assets/source/01/en/adult/Sex vs. Intimacy/Sex vs. Intimacy.txt
+    - assets/source/01/en/adult/Spicy Truth or Dare/Spicy Truth or Dare(1).txt
+    - assets/source/01/en/adult/The Morning After/The Morning After.txt
+    - assets/source/01/en/adult/The Taboo Zone/The Taboo Zone.txt
+    - assets/source/01/en/adult/Turn Ons - Turn Offs/Turn Ons – Turn Offs.txt
+    - assets/source/01/en/couples/Affection & Rituals/Affection_and_Rituals.txt
+    - assets/source/01/en/couples/Appreciation & Insecurity/Appreciation_and_Insecurity.txt
+    - assets/source/01/en/couples/Big Questions & Beliefs/Big_Questions_and_Beliefs.txt
+    - assets/source/01/en/couples/Boundaries & Trust/Boundaries_and_Trust.txt
+    - assets/source/01/en/couples/Conflict & Communication/Conflict_and_Communication.txt
+    - assets/source/01/en/couples/Daily Life Together/
+    - assets/source/01/en/couples/History & Past Loves/History_and_Past_Loves.txt
+    - assets/source/01/en/couples/Living Together/Living_Together.txt
+    - assets/source/01/en/couples/Love Languages & Expression/Love_Languages_and_Expression.txt
+    - assets/source/01/en/couples/Must-Have Questions Before Starting a Relationship/Must_Have_Questions_Before_Relationship.txt
+    - assets/source/01/en/couples/Romantic Fantasies/Romantic_Fantasies.txt
+    - assets/source/01/en/couples/Secrets & Openness/Secrets_and_Openness.txt
+    - assets/source/01/en/couples/Unasked Questions/Unasked_Questions.txt
+    - assets/source/01/en/couples/Visions of the Future/Visions_of_the_Future.txt
+    - assets/source/01/en/couples/What-Ifs & Imagination/What_Ifs_and_Imagination.txt
+    - assets/source/01/en/friends/Alternate Universes/Alternate Universes(1).txt
+    - assets/source/01/en/friends/Cringe Archive/Cringe Archive(1).txt
+    - assets/source/01/en/friends/Dark Thoughts & Weird Vibes/Dark Thoughts & Weird Vibes.txt
+    - assets/source/01/en/friends/Do You Even Know Me/Do You Even Know Me.txt
+    - assets/source/01/en/friends/Favorite Glitches in the Friendship Matrix/Favorite Glitches in the Friendship Matrix.txt
+    - assets/source/01/en/friends/Forgive & Forget (or Not)/Forgive & Forget (or Not).txt
+    - assets/source/01/en/friends/If We Were…/If We Were….txt
+    - assets/source/01/en/friends/Lowkey Roasts/Lowkey Roasts.txt
+    - assets/source/01/en/friends/Our Origin Story/Our_Origin_Story_FINAL.txt
+    - assets/source/01/en/friends/Shared Chaos/Shared Chaos.txt
+    - assets/source/01/en/friends/Turning Points/Turning Points.txt
+    - assets/source/01/en/friends/Unfiltered Games/Unfiltered Games.txt
+    - assets/source/01/en/friends/Unrealistic Life Plans/Unrealistic Life Plans(1).txt
+    - assets/source/01/en/friends/What You Dont Know About Me/What You Don_t Know About Me(1).txt
+    - assets/source/01/en/friends/Would You Still Be Friends If…/
