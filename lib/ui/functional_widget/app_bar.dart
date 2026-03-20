@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
 import '../../l10n/app_localizations.dart';
-import 'friend_icon_with_badge.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isSubscription;
@@ -14,7 +12,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
-      leading: const FriendIconWithBadge(),
+      // leading: const FriendIconWithBadge(),
       title: Text(
         AppLocalizations.of(context)!.appName,
         style: const TextStyle(
@@ -24,21 +22,21 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.white,
         ),
       ),
-      actions:  [
-        IconButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed('/settings');
-          },
-          icon: ColorFiltered(
-            colorFilter: const ColorFilter.mode(pinkMain, BlendMode.srcIn),
-            child: Image.asset(
-              'assets/icon/setting.png',
-              width: 24,
-              height: 24,
-            ),
-          ),
-        ),
-      ],
+      // actions:  [
+      //   IconButton(
+      //     onPressed: () {
+      //       Navigator.of(context).pushNamed('/settings');
+      //     },
+      //     icon: ColorFiltered(
+      //       colorFilter: const ColorFilter.mode(pinkMain, BlendMode.srcIn),
+      //       child: Image.asset(
+      //         'assets/icon/setting.png',
+      //         width: 24,
+      //         height: 24,
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 

@@ -10,8 +10,6 @@ import 'package:naked_truth/service/questions_importer.dart';
 import 'package:naked_truth/service/settings_sync_service.dart';
 import 'package:naked_truth/ui/login_page.dart';
 import 'package:naked_truth/ui/main/main_page.dart';
-import 'package:naked_truth/ui/main/settings_page.dart';
-import 'package:naked_truth/ui/onbording/onbording_page.dart';
 import 'package:naked_truth/utils/app_globals.dart';
 import 'package:naked_truth/utils/database_provider.dart';
 import 'package:naked_truth/utils/language_change_controller.dart';
@@ -22,6 +20,7 @@ import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 
 
@@ -94,11 +93,9 @@ class MustHaveTalksApp extends StatelessWidget {
 
   Map<String, WidgetBuilder> _buildAppRoutes() {
     return {
-      '/': (context) => const LoginPage(),
+      '/': (context) => const MainPage(),
       '/login': (context) => const LoginPage(),
       '/main': (context) => const MainPage(),
-      '/onboarding': (context) => const OnboardingPage(),
-      '/settings': (context) => const SettingsPage(),
     };
   }
 }

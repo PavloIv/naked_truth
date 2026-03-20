@@ -220,7 +220,7 @@ class QuestionCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               decoration: BoxDecoration(
-                gradient: Converters().getGradientByTopic(topic),
+                gradient: Converters().getGradientByTopic('Default'),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
@@ -242,7 +242,7 @@ class QuestionCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      gradient: Converters().getGradientByTopic(topic),
+                      gradient: Converters().getGradientByTopic('Default'),
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(16),
                         bottomRight: Radius.circular(16),

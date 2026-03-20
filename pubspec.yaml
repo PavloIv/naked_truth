@@ -1,7 +1,7 @@
 name: naked_truth
 description: "Card game"
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.0.2+4
 
 environment:
   sdk: ^3.8.1
@@ -95,80 +95,10 @@ flutter:
         - asset: fonts/Bitter-VariableFont_wght.ttf
 
   assets:
-    #    localization
     - lib/l10n/app_en.arb
     - lib/l10n/app_uk.arb
-
-    - assets/onboarding_image/onboarding1.png
-    - assets/onboarding_image/onboarding2.png
-    - assets/onboarding_image/onboarding3.png
-    - assets/onboarding_image/onboarding4.png
-    - assets/icon/app_icon.png
-    - assets/icon/crown.png
-    - assets/icon/setting.png
-    - assets/icon/adult.png
-    - assets/icon/couples.png
-    - assets/icon/friends.png
-    - assets/icon/friend.png
-    - assets/icon/add_friend.png
-
-    - assets/icon/arrow_back.png
-    - assets/icon/arrow_forward.png
-    - assets/icon/settings/crown.png
-    - assets/icon/settings/privace.png
-    - assets/icon/settings/rate.png
-    - assets/icon/settings/restore.png
-    - assets/icon/settings/share.png
-    - assets/icon/settings/terms.png
-
-    - assets/icon/card/After Dark Fights.png
-    - assets/icon/card/Bedroom Habits.png
-    - assets/icon/card/Dirty Would You Rather.png
-    - assets/icon/card/Fantasy Confessions.png
-    - assets/icon/card/Fetishes You Don’t Talk About.png
-    - assets/icon/card/First Time Stories.png
-    - assets/icon/card/Forbidden Thoughts.png
-    - assets/icon/card/I’d Try It If You Would.png
-    - assets/icon/card/Kinks & Curiosities.png
-    - assets/icon/card/Secret Crushes.png
-    - assets/icon/card/Sex vs. Intimacy.png
-    - assets/icon/card/Spicy Truth or Dare.png
-    - assets/icon/card/The Morning After.png
-    - assets/icon/card/The Taboo Zone.png
-    - assets/icon/card/Turn Ons - Turn Offs.png
-    - assets/icon/card/Affection & Rituals.png
-    - assets/icon/card/Appreciation & Insecurity.png
-    - assets/icon/card/Big Questions & Beliefs.png
-    - assets/icon/card/Boundaries & Trust.png
-    - assets/icon/card/Conflict & Communication.png
-    - assets/icon/card/Daily Life Together.png
-    - assets/icon/card/History & Past Loves.png
-    - assets/icon/card/Living Together.png
-    - assets/icon/card/Love Languages & Expression.png
-    - assets/icon/card/Must-Have Questions Before Starting a Relationship.png
-    - assets/icon/card/Romantic Fantasies.png
-    - assets/icon/card/Secrets & Openness.png
-    - assets/icon/card/Unasked Questions.png
-    - assets/icon/card/Visions of the Future.png
-    - assets/icon/card/What-Ifs & Imagination.png
-    - assets/icon/card/Alternate Universes.png
-    - assets/icon/card/Cringe Archive.png
-    - assets/icon/card/Dark Thoughts & Weird Vibes.png
-    - assets/icon/card/Do You Even Know Me.png
-    - assets/icon/card/Favorite Glitches in the Friendship Matrix.png
-    - assets/icon/card/Forgive & Forget (or Not).png
-    - assets/icon/card/If We Were….png
-    - assets/icon/card/Lowkey Roasts.png
-    - assets/icon/card/Our Origin Story.png
-    - assets/icon/card/Shared Chaos.png
-    - assets/icon/card/Turning Points.png
-    - assets/icon/card/Unfiltered Games.png
-    - assets/icon/card/Unrealistic Life Plans.png
-    - assets/icon/card/What You Dont Know About Me.png
-    - assets/icon/card/Would You Still Be Friends If….png
-
-
-    - assets/source/
+    - assets/icon/
+    - assets/icon/settings/
     - assets/source/01/en/adult/After Dark Fights/After Dark Fights.txt
     - assets/source/01/en/adult/Bedroom Habits/Bedroom Habits.txt
     - assets/source/01/en/adult/Dirty Would You Rather/Dirty Would You Rather(2).txt
@@ -189,7 +119,7 @@ flutter:
     - assets/source/01/en/couples/Big Questions & Beliefs/Big_Questions_and_Beliefs.txt
     - assets/source/01/en/couples/Boundaries & Trust/Boundaries_and_Trust.txt
     - assets/source/01/en/couples/Conflict & Communication/Conflict_and_Communication.txt
-    - assets/source/01/en/couples/Daily Life Together/
+    - assets/source/01/en/couples/Daily Life Together/Daily Life Together.txt
     - assets/source/01/en/couples/History & Past Loves/History_and_Past_Loves.txt
     - assets/source/01/en/couples/Living Together/Living_Together.txt
     - assets/source/01/en/couples/Love Languages & Expression/Love_Languages_and_Expression.txt
@@ -213,4 +143,19 @@ flutter:
     - assets/source/01/en/friends/Unfiltered Games/Unfiltered Games.txt
     - assets/source/01/en/friends/Unrealistic Life Plans/Unrealistic Life Plans(1).txt
     - assets/source/01/en/friends/What You Dont Know About Me/What You Don_t Know About Me(1).txt
-    - assets/source/01/en/friends/Would You Still Be Friends If…/
+    - assets/source/01/en/friends/Would You Still Be Friends If…/Would We Still Be Friends.txt
+    - assets/source/01/uk/дорослі/Звички В Спальні/Звички В Спальні.txt
+    - assets/source/01/uk/дорослі/Зізнання Фантазій/Зізнання Фантазій.txt
+    - assets/source/01/uk/дорослі/Про Що Ти Не Говориш/Про Що Ти Не Говориш.txt
+    - assets/source/01/uk/дорослі/Після Нічних Сварок/Після Нічних Сварок.txt
+    - assets/source/01/uk/дорослі/Що Б Ти Обрав/Що Б Ти Обрав.txt
+    - assets/source/01/uk/друзі/Альтернативні Всесвіти/Альтернативні Всесвіти.txt
+    - assets/source/01/uk/друзі/Архів Крінжу/Архів Крінжу.txt
+    - assets/source/01/uk/друзі/Темні Думки Дивні Вайби/Темні Думки Дивні Вайби.txt
+    - assets/source/01/uk/друзі/Ти Взагалі Мене Знаєш/Ти Взагалі Мене Знаєш.txt
+    - assets/source/01/uk/друзі/Улюблені Збої В Матриці Дружби/Улюблені Збої В Матриці Дружби.txt
+    - assets/source/01/uk/пари/Великі Питання Та Переконання/Великі Питання Та Переконання.txt
+    - assets/source/01/uk/пари/Визнання Та Невпевненість/Визнання Та Невпевненість.txt
+    - assets/source/01/uk/пари/Конфлікти Та Спілкування/Конфлікти Та Спілкування.txt
+    - assets/source/01/uk/пари/Межі Та Довіра/Межі Та Довіра.txt
+    - assets/source/01/uk/пари/Прихильність І Ритуали/Прихильність І Ритуали.txt

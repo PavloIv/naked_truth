@@ -23,9 +23,9 @@ class _MainPageState extends State<MainPage>
   late TabController _tabController;
 
   final Map<String, String> categoriesTitle = {
-    'adult': 'Adult',
-    'couples': 'Couples',
-    'friends': 'Friends',
+    'дорослі': 'Дорослі',
+    'пари': 'Пари',
+    'друзі': 'Друзі',
   };
 
   List<String> get tabTitles => categoriesTitle.values.toList();

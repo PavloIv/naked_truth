@@ -53,6 +53,7 @@ const Map<String, LinearGradient> cardGradientsMap = {
   "Unrealistic Life Plans": cardGradient43,
   "What You Dont Know About Me": cardGradient44,
   "Would You Still Be Friends If…": cardGradient45,
+  "Default": cardGradientMain
 };
 const Map<String, String> cardDescriptionMap = {
   "Appreciation & Insecurity": 'What makes you feel seen — or unseen',
@@ -100,6 +101,25 @@ const Map<String, String> cardDescriptionMap = {
   "Unrealistic Life Plans": 'Surprise! There’s more to me than you think',
   "What You Dont Know About Me": 'Bold dreams, big lies, and zero budgets',
   "Would You Still Be Friends If…": 'Extreme scenarios that will test your loyalty',
+
+  "Після Нічних Сварок": "Сварки після опівночі — коли емоції палають найяскравіше",
+  "Звички В Спальні": "Те, що відбувається за зачиненими дверима",
+  "Що Б Ти Обрав": "Сміливі вибори та пікантні дилеми",
+  "Зізнання Фантазій": "Поринь у свої найсміливіші, невимовлені бажання",
+  "Про Що Ти Не Говориш": "Таємниці, про які ти ніколи не наважувався говорити",
+
+  "Визнання Та Невпевненість": "Що змушує тебе відчувати себе поміченим — або непоміченим",
+  "Прихильність І Ритуали": "Дрібниці, які роблять кохання справжнім",
+  "Великі Питання Та Переконання": "У що ти насправді віриш — і чому",
+  "Межі Та Довіра": "Де проходить межа — і як ми її захищаємо",
+  "Конфлікти Та Спілкування": "Як ми сваримося — і як ми зцілюємося",
+
+  "Альтернативні Всесвіти": "Ким би ми були в зовсім іншому світі?",
+  "Архів Крінжу": "Згадаймо найнезручніші та найсмішніші моменти",
+  "Темні Думки Дивні Вайби": "Дивні думки, химерна енергія — і ми це обожнюємо",
+  "Ти Взагалі Мене Знаєш": "Доведи, наскільки добре (чи погано) ти мене знаєш",
+  "Улюблені Збої В Матриці Дружби": "Усі ті абсурдні, сюрреалістичні моменти, які неможливо пояснити"
+
 };
 
 
@@ -160,41 +180,19 @@ const LinearGradient cardMainGradient = LinearGradient(
   stops: [0.45, 1.0],
 );
 
-// 🌄 Фон онбордингу — градієнт бордо-рожевий із глибини в світло-малиновий
-const LinearGradient onboardingBackgroundGradient = LinearGradient(
-  begin: AlignmentDirectional(-0.1, -1.0),
-  end: AlignmentDirectional(0.1, 1.0),
-  colors: [
-    Color(0xFF3B002A), // глибокий бордо
-    Color(0xFF6C0F45), // теплий винний
-    Color(0xFFB83B82), // світлий малиново-рожевий
-  ],
-  stops: [0.0, 0.5, 1.0],
-);
+// CARD GRADIENTS
 
-// 🪞 Контейнер онбордингу — елегантний фіолетово-бордовий градієнт
-const LinearGradient onboardingContainerGradient = LinearGradient(
-  colors: [
-    Color(0xFF9E2B6A), // бордо-фуксія
-    Color(0xFF3B002A), // темна основа
-  ],
-  stops: [0.0, 0.6],
-  begin: Alignment.topCenter,
-  end: Alignment.bottomCenter,
-);
-
-// 💖 Кнопка онбордингу — яскравий рожево-бордовий градієнт для акценту
-const LinearGradient onboardingButtonGradient = LinearGradient(
+const LinearGradient cardGradientMain = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
-  transform: GradientRotation(161.21 * 3.1416 / 180),
+  transform: GradientRotation(161.21 * 3.1416 / 180), // 161.21° → радіани
   colors: [
-    Color(0xFFFF4F9D), // яскравий рожевий
-    Color(0xFF9E1B5F), // бордовий із фіолетовим підтоном
+    Color(0xFFDD2476), // #DD2476
+    Color(0xFF762247), // #762247
+    Color(0xFF430101), // #430101
   ],
 );
 
-// CARD GRADIENTS
 
 const LinearGradient cardGradient1 = LinearGradient(
   begin: Alignment.topCenter,
@@ -641,8 +639,6 @@ const LinearGradient cardGradient45 = LinearGradient(
     Color(0xFF4D4A99),
   ],
 );
-
-const Color onboardingContainerBorderColor = Color(0xFF8E2B6A);
 
 const Color purpleMain = Color(0xFFB0246B); // глибокий малиново-бордовий
 

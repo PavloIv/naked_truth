@@ -28,12 +28,12 @@ class CategoryPage extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final t = topics[index];
-        final gradient = Converters().getGradientByTopic(t.topic);
+        final gradient = Converters().getGradientByTopic('Default');
 
         return GestureDetector(
           onTap: () async {
-            if (!t.isFree) {
-              if (isSubscription) {
+            // if (!t.isFree) {
+            //   if (isSubscription) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => QuestionsPage(
@@ -42,19 +42,20 @@ class CategoryPage extends StatelessWidget {
                     ),
                   ),
                 );
-              } else {
-                Navigator.of(context).pushNamed('/subscription');
-              }
-            } else {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => QuestionsPage(
-                    category: category,
-                    topic: t.topic,
-                  ),
-                ),
-              );
-            }
+              // }
+              // else {
+              //   Navigator.of(context).pushNamed('/subscription');
+              // }
+            // } else {
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(
+            //       builder: (_) => QuestionsPage(
+            //         category: category,
+            //         topic: t.topic,
+            //       ),
+            //     ),
+            //   );
+            // }
           },
           child: Stack(
             children: [
