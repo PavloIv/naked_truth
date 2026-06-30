@@ -57,6 +57,10 @@ class SettingsSyncService {
           await SPUserData.setFriendName(friendInfo['displayName']);
           await SPUserData.setFriendCode(friendInfo['friendCode']);
         }
+      } else {
+        await SPUserData.setFriendUid(null);
+        await SPUserData.setFriendName(null);
+        await SPUserData.setFriendCode(null);
       }
     } catch (e, st) {
       if (kDebugMode) {

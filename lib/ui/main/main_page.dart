@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage>
       child: BlocBuilder<MainBloc, MainState>(
         builder: (context, state) {
           if (state is MainLoaded) {
-            return _buildMain(state.topicsByCategory,state.isSubscription);
+            return _buildMain(state.topicsByCategory);
           }
           return const Center(child: CircularProgressIndicator());
         },
@@ -60,14 +60,14 @@ class _MainPageState extends State<MainPage>
     );
   }
 
-  Widget _buildMain(Map<String, List<CategoryTopic>> topicsByCategory,bool isSubscription) {
+  Widget _buildMain(Map<String, List<CategoryTopic>> topicsByCategory) {
     return Container(
       decoration: const BoxDecoration(
         gradient: appBackgroundGradient,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: MainAppBar(isSubscription: isSubscription),
+        appBar: const MainAppBar(),
 
         body: Column(
           children: [
@@ -80,7 +80,6 @@ class _MainPageState extends State<MainPage>
                   return CategoryPage(
                     category: categoryKeys[index],
                     topics: topics,
-                    isSubscription: isSubscription
                   );
                 }),
               ),

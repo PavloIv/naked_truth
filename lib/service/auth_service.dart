@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -27,9 +28,9 @@ class AuthService {
 
     final credential = GoogleAuthProvider.credential(idToken: auth.idToken);
 
-    final cred = await FirebaseAuth.instance.signInWithCredential(credential);
+    final cred = await _auth.signInWithCredential(credential);
 
-    await handleStartupLogic();
+    await _runStartupLogicSafely();
     return cred;
   }
 
@@ -51,8 +52,17 @@ class AuthService {
 
     final cred = await _auth.signInWithCredential(oauth);
 
-    await handleStartupLogic();
+    await _runStartupLogicSafely();
     return cred;
+  }
+
+  Future<void> _runStartupLogicSafely() async {
+    try {
+      await handleStartupLogic();
+    } catch (err, st) {
+      debugPrint('Startup logic failed after sign-in: $err');
+      debugPrintStack(stackTrace: st);
+    }
   }
 
   Future<void> signOut() async {

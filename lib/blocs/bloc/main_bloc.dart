@@ -24,6 +24,6 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         grouped[key]!.add(CategoryTopic(topic: q.topic, isFree: q.isFree));
       }
     }
-    emit(MainLoaded(grouped, false));
+    emit(MainLoaded(grouped));
   }
 }

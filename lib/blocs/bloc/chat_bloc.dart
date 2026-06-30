@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 import '../event/chat_event.dart';
 import '../state/chat_state.dart';
@@ -23,10 +24,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     required this.friendUid,
   }) : super(ChatInitial()) {
     on<LoadMessages>(_onLoadMessages);
+    on<MessagesUpdated>(_onMessagesUpdated);
     on<SendMessage>(_onSendMessage);
     on<MarkAsRead>(_onMarkAsRead);
     on<ListenFriendStatus>(_onListenFriendStatus);
+    on<FriendStatusUpdated>(_onFriendStatusUpdated);
     on<ListenFriendReadStatus>(_onListenFriendReadStatus);
+    on<FriendReadUpdated>(_onFriendReadUpdated);
   }
 
   /// 📨 Отримання повідомлень
@@ -46,22 +50,28 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         .listen(
           (snapshot) {
         final messages = snapshot.docs.map((d) => Message.fromFirestore(d)).toList();
-
-        add(MarkAsRead());
-
-        final current = state;
-        emit(ChatLoaded(
-          messages: messages,
-          isFriendOnline: current is ChatLoaded ? current.isFriendOnline : false,
-          friendLastSeen: current is ChatLoaded ? current.friendLastSeen : null,
-          friendLastRead: current is ChatLoaded ? current.friendLastRead : null,
-        ));
+        add(MessagesUpdated(messages));
       },
       onError: (error) {
-        print("❌ Firestore stream error: $error");
-        emit(ChatError("Помилка завантаження повідомлень"));
+        debugPrint("Firestore stream error: $error");
+        add(MessagesUpdated(const []));
       },
     );
+  }
+
+  void _onMessagesUpdated(
+    MessagesUpdated event,
+    Emitter<ChatState> emit,
+  ) {
+    add(MarkAsRead());
+
+    final current = state;
+    emit(ChatLoaded(
+      messages: event.messages,
+      isFriendOnline: current is ChatLoaded ? current.isFriendOnline : false,
+      friendLastSeen: current is ChatLoaded ? current.friendLastSeen : null,
+      friendLastRead: current is ChatLoaded ? current.friendLastRead : null,
+    ));
   }
 
   /// 💬 Відправлення повідомлення
@@ -77,7 +87,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         'timestamp': Timestamp.now(),
       });
     } catch (e) {
-      print("❌ Помилка при відправці повідомлення: $e");
+      debugPrint("Помилка при відправці повідомлення: $e");
     }
   }
 
@@ -97,7 +107,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         'lastRead': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
     } catch (e) {
-      print("⚠️ Помилка при оновленні lastRead: $e");
+      debugPrint("Помилка при оновленні lastRead: $e");
     }
   }
 
@@ -117,21 +127,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         final data = snap.data();
         final isOnline = data?['isOnline'] ?? false;
         final lastSeen = (data?['lastSeen'] as Timestamp?)?.toDate();
-
-        final current = state;
-        if (current is ChatLoaded) {
-          emit(ChatLoaded(
-            messages: current.messages,
-            isFriendOnline: isOnline,
-            friendLastSeen: lastSeen,
-            friendLastRead: current.friendLastRead,
-          ));
-        }
+        add(FriendStatusUpdated(isOnline: isOnline, lastSeen: lastSeen));
       },
       onError: (e) {
-        print("⚠️ Помилка статусу друга: $e");
+        debugPrint("Помилка статусу друга: $e");
       },
     );
+  }
+
+  void _onFriendStatusUpdated(
+    FriendStatusUpdated event,
+    Emitter<ChatState> emit,
+  ) {
+    final current = state;
+    if (current is! ChatLoaded) return;
+
+    emit(ChatLoaded(
+      messages: current.messages,
+      isFriendOnline: event.isOnline,
+      friendLastSeen: event.lastSeen,
+      friendLastRead: current.friendLastRead,
+    ));
   }
 
   /// 👁‍🗨 Слухач lastRead друга
@@ -150,21 +166,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         .listen(
           (snap) {
         final lastRead = (snap.data()?['lastRead'] as Timestamp?)?.toDate();
-
-        final current = state;
-        if (current is ChatLoaded) {
-          emit(ChatLoaded(
-            messages: current.messages,
-            isFriendOnline: current.isFriendOnline,
-            friendLastSeen: current.friendLastSeen,
-            friendLastRead: lastRead,
-          ));
-        }
+        add(FriendReadUpdated(lastRead));
       },
       onError: (e) {
-        print("⚠️ Помилка friendRead: $e");
+        debugPrint("Помилка friendRead: $e");
       },
     );
+  }
+
+  void _onFriendReadUpdated(
+    FriendReadUpdated event,
+    Emitter<ChatState> emit,
+  ) {
+    final current = state;
+    if (current is! ChatLoaded) return;
+
+    emit(ChatLoaded(
+      messages: current.messages,
+      isFriendOnline: current.isFriendOnline,
+      friendLastSeen: current.friendLastSeen,
+      friendLastRead: event.lastRead,
+    ));
   }
 
   @override

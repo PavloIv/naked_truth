@@ -3,11 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../blocs/bloc/add_friend_bloc.dart';
 import '../../blocs/bloc/unread_messages_bloc.dart';
+import '../../blocs/event/add_friend_event.dart';
 import '../../blocs/event/unread_messages_event.dart';
 import '../../blocs/state/unread_messages_state.dart';
+import '../../service/user_service.dart';
 import '../../service/unread_messages_service.dart';
 import '../../constants.dart';
+import '../add_friend_page.dart';
 import '../friend_page.dart';
 import 'unread_message_badge.dart';
 
@@ -50,8 +54,21 @@ class FriendIconWithBadge extends StatelessWidget {
                         ),
                       ),
                     );
-                    context.read<UnreadMessagesBloc>().add(ListenUnreadMessages());
+                  } else {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => BlocProvider(
+                          create: (_) => AddFriendBloc(
+                            userService: UserService(),
+                            auth: FirebaseAuth.instance,
+                          )..add(LoadMyFriendCode()),
+                          child: const AddFriendPage(),
+                        ),
+                      ),
+                    );
                   }
+                  if (!context.mounted) return;
+                  context.read<UnreadMessagesBloc>().add(ListenUnreadMessages());
                 },
                 icon: ColorFiltered(
                   colorFilter: const ColorFilter.mode(pinkMain, BlendMode.srcIn),

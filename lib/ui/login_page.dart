@@ -1,17 +1,12 @@
-import 'dart:async';
-import 'dart:io' show Platform;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../constants.dart';
+import '../constants.dart';
 import '../blocs/bloc/auth_bloc.dart';
 import '../blocs/event/auth_event.dart';
 import '../blocs/state/auth_state.dart';
-import '../../service/auth_service.dart';
 import '../l10n/app_localizations.dart';
-import 'main/main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -91,181 +86,162 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final screenH = MediaQuery.of(context).size.height;
 
-    return RepositoryProvider(
-      create: (_) => AuthService(),
-      child: BlocProvider(
-        create: (ctx) => AuthBloc(service: ctx.read<AuthService>()),
-        child: BlocListener<AuthBloc, AuthState>(
-          listenWhen: (p, c) =>
-              p.status != c.status || p.user?.uid != c.user?.uid,
-          listener: (context, state) async {
-            if (state.status == AuthStatus.failure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error ?? l10n.loginFailed)),
-              );
-            }
-            if (state.status == AuthStatus.authenticated &&
-                state.user != null) {
-              if (!mounted) return;
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const MainPage()),
-              );
-            }
-          },
-          child: Scaffold(
-            extendBodyBehindAppBar: true,
-            backgroundColor: Colors.transparent,
-            body: Stack(
-              children: [
-                Container(
-                    height: screenH,
-                    decoration:
-                        const BoxDecoration(gradient: appBackgroundGradient)),
-                SafeArea(
-                  child: Column(
-                    children: [
-                      AppBar(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        title: Text(l10n.signIn,
-                            style: const TextStyle(color: Colors.white)),
-                        centerTitle: true,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-                        child: BlocBuilder<AuthBloc, AuthState>(
-                          buildWhen: (p, c) =>
-                              p.status != c.status ||
-                              p.user?.uid != c.user?.uid ||
-                              p.error != c.error,
-                          builder: (_, s) {
-                            final err = (s.status == AuthStatus.failure &&
-                                    s.error != null)
+    return BlocListener<AuthBloc, AuthState>(
+      listenWhen: (p, c) =>
+          p.status != c.status || p.user?.uid != c.user?.uid,
+      listener: (context, state) async {
+        if (state.status == AuthStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error ?? l10n.loginFailed)),
+          );
+        }
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Container(
+                height: screenH,
+                decoration:
+                    const BoxDecoration(gradient: appBackgroundGradient)),
+            SafeArea(
+              child: Column(
+                children: [
+                  AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    title: Text(l10n.signIn,
+                        style: const TextStyle(color: Colors.white)),
+                    centerTitle: true,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                    child: BlocBuilder<AuthBloc, AuthState>(
+                      buildWhen: (p, c) =>
+                          p.status != c.status ||
+                          p.user?.uid != c.user?.uid ||
+                          p.error != c.error,
+                      builder: (_, s) {
+                        final err =
+                            (s.status == AuthStatus.failure && s.error != null)
                                 ? ' • ${s.error}'
                                 : '';
-                            return Text(
-                              'Status: ${s.status.name}${s.user != null ? " • uid=${s.user!.uid}" : ""}$err',
-                              style: const TextStyle(
-                                  color: Colors.white70, fontSize: 12),
-                              textAlign: TextAlign.center,
-                            );
-                          },
-                        ),
+                        return Text(
+                          'Status: ${s.status.name}${s.user != null ? " • uid=${s.user!.uid}" : ""}$err',
+                          style: const TextStyle(
+                              color: Colors.white70, fontSize: 12),
+                          textAlign: TextAlign.center,
+                        );
+                      },
+                    ),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        gradient: purpleGradient,
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            gradient: purpleGradient,
-                            borderRadius: BorderRadius.circular(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            l10n.welcome,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                l10n.welcome,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 20,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                l10n.signInToStart,
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 16),
-                              BlocBuilder<AuthBloc, AuthState>(
-                                buildWhen: (p, c) => p.status != c.status,
-                                builder: (context, state) {
-                                  final isLoading =
-                                      state.status == AuthStatus.authenticating;
+                          const SizedBox(height: 6),
+                          Text(
+                            l10n.signInToStart,
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 16),
+                          BlocBuilder<AuthBloc, AuthState>(
+                            buildWhen: (p, c) => p.status != c.status,
+                            builder: (context, state) {
+                              final isLoading =
+                                  state.status == AuthStatus.authenticating;
 
-                                  Future<void> onSignIn() async {
-                                    if (isLoading) return;
+                              Future<void> onSignIn() async {
+                                if (isLoading) return;
 
-                                    const webClientId =
-                                        '870984725053-e6ngh9e4g68sd72tc0apl4gg8pb1ui4u.apps.googleusercontent.com';
+                                const webClientId =
+                                    '870984725053-e6ngh9e4g68sd72tc0apl4gg8pb1ui4u.apps.googleusercontent.com';
 
-                                    if (Platform.isIOS) {
-                                      context.read<AuthBloc>().add(const SignInWithApplePressed());
-                                    } else {
-                                      context.read<AuthBloc>().add(
-                                        const SignInWithGooglePressed(serverClientId: webClientId),
-                                      );
-                                    }
-                                  }
+                                context.read<AuthBloc>().add(
+                                      const SignInWithGooglePressed(
+                                        serverClientId: webClientId,
+                                      ),
+                                    );
+                              }
 
-                                  return Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 48,
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            gradient: appBackgroundGradient,
-                                            borderRadius:
-                                                BorderRadius.circular(24),
-                                          ),
-                                          child: ElevatedButton.icon(
-                                            onPressed:
-                                                isLoading ? null : onSignIn,
-                                            icon: isLoading
-                                                ? const SizedBox(
-                                                    width: 18,
-                                                    height: 18,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      strokeWidth: 2,
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                                  Color>(
-                                                              Colors.white),
-                                                    ),
-                                                  )
-                                                : const Icon(Icons.login,
-                                                    color: Colors.white),
-                                            label: Text(isLoading
-                                                ? l10n.signingIn
-                                                : l10n.signIn),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shadowColor: Colors.transparent,
-                                              foregroundColor: Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          24)),
-                                            ),
-                                          ),
+                              return Column(
+                                children: [
+                                  SizedBox(
+                                    height: 48,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        gradient: appBackgroundGradient,
+                                        borderRadius:
+                                            BorderRadius.circular(24),
+                                      ),
+                                      child: ElevatedButton.icon(
+                                        onPressed: isLoading ? null : onSignIn,
+                                        icon: isLoading
+                                            ? const SizedBox(
+                                                width: 18,
+                                                height: 18,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.white),
+                                                ),
+                                              )
+                                            : const Icon(Icons.login,
+                                                color: Colors.white),
+                                        label: Text(isLoading
+                                            ? l10n.signingIn
+                                            : l10n.signIn),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          shadowColor: Colors.transparent,
+                                          foregroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(24)),
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                ],
+                              );
+                            },
                           ),
-                        ),
+                        ],
                       ),
-                      const Spacer(),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                  const Spacer(),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

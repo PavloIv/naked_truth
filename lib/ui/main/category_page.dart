@@ -6,13 +6,11 @@ import '../qustions/qustions_page.dart';
 class CategoryPage extends StatelessWidget {
   final List<CategoryTopic> topics;
   final String category;
-  final bool isSubscription;
 
   const CategoryPage({
     super.key,
     required this.topics,
     required this.category,
-    required this.isSubscription
   });
 
   @override
@@ -32,30 +30,14 @@ class CategoryPage extends StatelessWidget {
 
         return GestureDetector(
           onTap: () async {
-            // if (!t.isFree) {
-            //   if (isSubscription) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => QuestionsPage(
-                      category: category,
-                      topic: t.topic,
-                    ),
-                  ),
-                );
-              // }
-              // else {
-              //   Navigator.of(context).pushNamed('/subscription');
-              // }
-            // } else {
-            //   Navigator.of(context).push(
-            //     MaterialPageRoute(
-            //       builder: (_) => QuestionsPage(
-            //         category: category,
-            //         topic: t.topic,
-            //       ),
-            //     ),
-            //   );
-            // }
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => QuestionsPage(
+                  category: category,
+                  topic: t.topic,
+                ),
+              ),
+            );
           },
           child: Stack(
             children: [
@@ -65,7 +47,7 @@ class CategoryPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 8,
                       offset: const Offset(2, 4),
                     ),

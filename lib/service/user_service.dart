@@ -16,6 +16,7 @@ class UserService {
 
     final friendDoc = friendQuery.docs.first;
     final friendUid = friendDoc.id;
+    final friendData = friendDoc.data();
 
     if (friendUid == myUid) return false;
 
@@ -34,6 +35,10 @@ class UserService {
         'since': now,
       }
     });
+
+    await SPUserData.setFriendUid(friendUid);
+    await SPUserData.setFriendName(friendData['displayName'] as String?);
+    await SPUserData.setFriendCode(friendData['friendCode'] as String?);
 
     return true;
   }

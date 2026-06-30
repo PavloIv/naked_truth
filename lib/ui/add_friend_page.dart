@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../constants.dart';
+import '../constants.dart';
 import '../blocs/bloc/add_friend_bloc.dart';
 import '../blocs/event/add_friend_event.dart';
 import '../blocs/state/add_friend_state.dart';
@@ -15,7 +15,7 @@ class AddFriendPage extends StatelessWidget {
     final screenH = MediaQuery.of(context).size.height;
     final controllerFriend = TextEditingController();
 
-    void _addFriend() {
+    void addFriend() {
       final code = controllerFriend.text.trim();
       if (code.isNotEmpty) {
         context.read<AddFriendBloc>().add(AddFriendByCode(code));
@@ -112,7 +112,9 @@ class AddFriendPage extends StatelessWidget {
                                 icon: const Icon(Icons.share,
                                     color: Colors.white),
                                 onPressed: () {
-                                  Share.share(myFriendCode!);
+                                  SharePlus.instance.share(
+                                    ShareParams(text: myFriendCode!),
+                                  );
                                 },
                               ),
                             ],
@@ -138,14 +140,14 @@ class AddFriendPage extends StatelessWidget {
                           ),
                         ),
                         textInputAction: TextInputAction.done,
-                        onSubmitted: (_) => _addFriend(),
+                        onSubmitted: (_) => addFriend(),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: ElevatedButton.icon(
-                        onPressed: isLoading ? null : _addFriend,
+                        onPressed: isLoading ? null : addFriend,
                         icon: isLoading
                             ? const SizedBox(
                           width: 18,

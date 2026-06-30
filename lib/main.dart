@@ -1,7 +1,9 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:naked_truth/service/questions_importer.dart';
+import 'package:naked_truth/ui/auth_gate.dart';
 import 'package:naked_truth/ui/main/main_page.dart';
 import 'package:naked_truth/utils/app_globals.dart';
 import 'package:naked_truth/utils/database_provider.dart';
@@ -15,6 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp();
   final dbProvider = DatabaseProvider();
   await dbProvider.init();
   final database = dbProvider.database;
@@ -73,7 +76,7 @@ class MustHaveTalksApp extends StatelessWidget {
 
   Map<String, WidgetBuilder> _buildAppRoutes() {
     return {
-      '/': (context) => const MainPage(),
+      '/': (context) => const AuthGate(),
       '/main': (context) => const MainPage(),
     };
   }

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:naked_truth/utils/utils_formats.dart';
 
-import '../../constants.dart';
+import '../constants.dart';
 import '../blocs/event/friend_event.dart';
 import '../blocs/state/friend_state.dart';
 import '../service/friend_service.dart';
@@ -255,6 +255,7 @@ class MyFriendPage extends StatelessWidget {
                                   ),
                                 ),
                               );
+                              if (!context.mounted) return;
                               context.read<FriendBloc>().add(LoadFriend(friendUid));
                             },
 

@@ -27,6 +27,12 @@ abstract class ChatEvent {}
 
 class LoadMessages extends ChatEvent {}
 
+class MessagesUpdated extends ChatEvent {
+  final List<Message> messages;
+
+  MessagesUpdated(this.messages);
+}
+
 class SendMessage extends ChatEvent {
   final String text;
   SendMessage(this.text);
@@ -36,4 +42,20 @@ class MarkAsRead extends ChatEvent {}
 
 class ListenFriendStatus extends ChatEvent {}
 
+class FriendStatusUpdated extends ChatEvent {
+  final bool isOnline;
+  final DateTime? lastSeen;
+
+  FriendStatusUpdated({
+    required this.isOnline,
+    required this.lastSeen,
+  });
+}
+
 class ListenFriendReadStatus extends ChatEvent {}
+
+class FriendReadUpdated extends ChatEvent {
+  final DateTime? lastRead;
+
+  FriendReadUpdated(this.lastRead);
+}

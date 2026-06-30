@@ -9,9 +9,8 @@ final class MainLoading extends MainState {}
 
 class MainLoaded extends MainState {
   final Map<String, List<CategoryTopic>> topicsByCategory;
-  final bool isSubscription;
 
-  MainLoaded(this.topicsByCategory,this.isSubscription);
+  MainLoaded(this.topicsByCategory);
 }
 
 class MainError extends MainState {

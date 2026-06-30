@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../constants.dart';
+import '../constants.dart';
 import '../blocs/bloc/apply_premium_bloc.dart';
 import '../blocs/event/apply_premium_event.dart';
 import '../blocs/state/apply_premium_state.dart';
