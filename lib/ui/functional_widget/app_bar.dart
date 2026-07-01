@@ -18,7 +18,26 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
-      leading: currentUser != null ? const FriendIconWithBadge() : null,
+      leading: currentUser == null
+          ? null
+          : IconButton(
+              tooltip: 'Акаунт',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<AuthBloc>(),
+                      child: const AccountPage(),
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(
+                Icons.account_circle_outlined,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
       title: Text(
         AppLocalizations.of(context)!.appName,
         style: const TextStyle(
@@ -31,20 +50,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: currentUser == null
           ? null
           : [
-              IconButton(
-                tooltip: 'Акаунт',
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                        value: context.read<AuthBloc>(),
-                        child: const AccountPage(),
-                      ),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.person_outline, color: Colors.white),
-              ),
+              const FriendIconWithBadge(),
             ],
     );
   }

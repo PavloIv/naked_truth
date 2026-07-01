@@ -10,7 +10,6 @@ import '../../blocs/event/unread_messages_event.dart';
 import '../../blocs/state/unread_messages_state.dart';
 import '../../service/user_service.dart';
 import '../../service/unread_messages_service.dart';
-import '../../constants.dart';
 import '../add_friend_page.dart';
 import '../friend_page.dart';
 import 'unread_message_badge.dart';
@@ -70,13 +69,10 @@ class FriendIconWithBadge extends StatelessWidget {
                   if (!context.mounted) return;
                   context.read<UnreadMessagesBloc>().add(ListenUnreadMessages());
                 },
-                icon: ColorFiltered(
-                  colorFilter: const ColorFilter.mode(pinkMain, BlendMode.srcIn),
-                  child: Image.asset(
-                    'assets/icon/friend.png',
-                    width: 26,
-                    height: 26,
-                  ),
+                icon: const Icon(
+                  Icons.people_alt_outlined,
+                  color: Colors.white,
+                  size: 28,
                 ),
               ),
               const Positioned(
