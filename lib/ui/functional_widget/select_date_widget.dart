@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
 
 class SelectDate {
   Future<String> selectYear(
@@ -7,7 +8,7 @@ class SelectDate {
     final List<String>? pickedYear = await _showPicker(
       context: context,
       columns: 1,
-      title: 'Select Year',
+      title: AppLocalizations.of(context)!.selectYear,
       items: [
         List.generate(51, (index) => (2000 + index).toString()),
       ],
@@ -25,7 +26,7 @@ class SelectDate {
     final List<String>? pickedData = await _showPicker(
       context: context,
       columns: 2,
-      title: 'Select Year and Month',
+      title: AppLocalizations.of(context)!.selectYearAndMonth,
       items: [
         List.generate(51, (index) => (2000 + index).toString()),
         List.generate(12, (index) => (index + 1).toString()),
@@ -46,7 +47,7 @@ class SelectDate {
     final List<String>? pickedData = await _showPicker(
       context: context,
       columns: 3,
-      title: 'Select Year, Month, and Day',
+      title: AppLocalizations.of(context)!.selectYearMonthAndDay,
       items: [
         List.generate(51, (index) => (2000 + index).toString()),
         List.generate(12, (index) => (index + 1).toString()),
@@ -101,7 +102,7 @@ class SelectDate {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(null),
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -112,7 +113,7 @@ class SelectDate {
                   ),
                 );
               },
-              child: const Text('OK'),
+              child: Text(AppLocalizations.of(context)!.okAction),
             ),
           ],
         );

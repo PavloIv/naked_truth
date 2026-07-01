@@ -8,6 +8,7 @@ import '../../blocs/bloc/unread_messages_bloc.dart';
 import '../../blocs/event/add_friend_event.dart';
 import '../../blocs/event/unread_messages_event.dart';
 import '../../blocs/state/unread_messages_state.dart';
+import '../../l10n/app_localizations.dart';
 import '../../service/user_service.dart';
 import '../../service/unread_messages_service.dart';
 import '../add_friend_page.dart';
@@ -46,9 +47,10 @@ class FriendIconWithBadge extends StatelessWidget {
                   if (friendUid != null) {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => MyFriendPage(
+                          builder: (_) => MyFriendPage(
                           friendUid: friendUid!,
-                          friendName: friendName ?? 'Friend',
+                          friendName:
+                              friendName ?? AppLocalizations.of(context)!.friend,
                           friendCode: friendCode ?? '',
                         ),
                       ),

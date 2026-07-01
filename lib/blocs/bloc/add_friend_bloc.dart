@@ -38,13 +38,17 @@ class AddFriendBloc extends Bloc<AddFriendEvent, AddFriendState> {
 
     emit(AddFriendLoading());
 
-    final success = await userService.addFriendByCode(user.uid, event.code);
+    final result = await userService.addFriendByCode(
+      user.uid,
+      event.code,
+      replaceExistingFriend: event.replaceExistingFriend,
+    );
 
-    if (success) {
-      emit(AddFriendSuccess('Друг доданий!'));
+    if (result.success) {
+      emit(AddFriendSuccess(result.message));
       add(LoadMyFriendCode());
     } else {
-      emit(AddFriendFailure('Код не знайдено або не можна додати себе'));
+      emit(AddFriendFailure(result.message));
     }
   }
 }

@@ -364,6 +364,324 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to restore your purchase. Please try again later.'**
   String get purchaseRestoreFailed;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @friend.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get friend;
+
+  /// No description provided for @signOutTakingTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing out is taking too long. Please try again.'**
+  String get signOutTakingTooLong;
+
+  /// No description provided for @signOutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to sign out'**
+  String get signOutFailed;
+
+  /// No description provided for @userNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get userNotFound;
+
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
+
+  /// No description provided for @notGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Not generated'**
+  String get notGenerated;
+
+  /// No description provided for @mainInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Main information'**
+  String get mainInfo;
+
+  /// No description provided for @friendCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend code'**
+  String get friendCodeLabel;
+
+  /// No description provided for @registrationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration date'**
+  String get registrationDate;
+
+  /// No description provided for @friendStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend status'**
+  String get friendStatus;
+
+  /// No description provided for @friendConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend connected'**
+  String get friendConnected;
+
+  /// No description provided for @noFriendYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No friend yet'**
+  String get noFriendYet;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @signingOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing out...'**
+  String get signingOut;
+
+  /// No description provided for @signOutAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOutAccount;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @endFriendshipQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'End friendship?'**
+  String get endFriendshipQuestion;
+
+  /// No description provided for @endFriendshipDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You will no longer be connected as friends. You can add a new friend later.'**
+  String get endFriendshipDescription;
+
+  /// No description provided for @endFriendshipAction.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get endFriendshipAction;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noData;
+
+  /// No description provided for @online.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get online;
+
+  /// No description provided for @offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get offline;
+
+  /// No description provided for @distanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get distanceLabel;
+
+  /// No description provided for @friendsSinceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends since'**
+  String get friendsSinceLabel;
+
+  /// No description provided for @openChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Open chat'**
+  String get openChat;
+
+  /// No description provided for @changeFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Change friend'**
+  String get changeFriend;
+
+  /// No description provided for @endFriendship.
+  ///
+  /// In en, this message translates to:
+  /// **'End friendship'**
+  String get endFriendship;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @codeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied'**
+  String get codeCopied;
+
+  /// No description provided for @enterFriendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your friend\'s code'**
+  String get enterFriendCode;
+
+  /// No description provided for @friendCodeExample.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: ABC123'**
+  String get friendCodeExample;
+
+  /// No description provided for @adding.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding...'**
+  String get adding;
+
+  /// No description provided for @changing.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing...'**
+  String get changing;
+
+  /// No description provided for @onlineInBrackets.
+  ///
+  /// In en, this message translates to:
+  /// **'(online)'**
+  String get onlineInBrackets;
+
+  /// No description provided for @lastSeenAt.
+  ///
+  /// In en, this message translates to:
+  /// **'(last seen at {hour}:{minute})'**
+  String lastSeenAt(Object hour, Object minute);
+
+  /// No description provided for @startConversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the conversation'**
+  String get startConversation;
+
+  /// No description provided for @enterMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a message...'**
+  String get enterMessage;
+
+  /// No description provided for @noQuestionsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No questions available.'**
+  String get noQuestionsAvailable;
+
+  /// No description provided for @questionProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} of {total}'**
+  String questionProgress(int current, int total);
+
+  /// No description provided for @activatePremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate premium'**
+  String get activatePremium;
+
+  /// No description provided for @yourPremiumCodeForFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Your premium code for a friend'**
+  String get yourPremiumCodeForFriend;
+
+  /// No description provided for @enterPremiumCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter premium code'**
+  String get enterPremiumCode;
+
+  /// No description provided for @premiumCodeExample.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: PREM123'**
+  String get premiumCodeExample;
+
+  /// No description provided for @applying.
+  ///
+  /// In en, this message translates to:
+  /// **'Applying...'**
+  String get applying;
+
+  /// No description provided for @premiumActive.
+  ///
+  /// In en, this message translates to:
+  /// **'✅ Premium is active'**
+  String get premiumActive;
+
+  /// No description provided for @premiumInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'❌ Premium is not active'**
+  String get premiumInactive;
+
+  /// No description provided for @premiumValidUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until: {date}'**
+  String premiumValidUntil(Object date);
+
+  /// No description provided for @selectYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Select year'**
+  String get selectYear;
+
+  /// No description provided for @selectYearAndMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select year and month'**
+  String get selectYearAndMonth;
+
+  /// No description provided for @selectYearMonthAndDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Select year, month, and day'**
+  String get selectYearMonthAndDay;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

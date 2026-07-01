@@ -21,7 +21,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: currentUser == null
           ? null
           : IconButton(
-              tooltip: 'Акаунт',
+              tooltip: AppLocalizations.of(context)!.account,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

@@ -4,5 +4,7 @@ class LoadMyFriendCode extends AddFriendEvent {}
 
 class AddFriendByCode extends AddFriendEvent {
   final String code;
-  AddFriendByCode(this.code);
+  final bool replaceExistingFriend;
+
+  AddFriendByCode(this.code, {this.replaceExistingFriend = false});
 }

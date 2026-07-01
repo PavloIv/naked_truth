@@ -4,6 +4,7 @@ import '../constants.dart';
 import '../blocs/bloc/apply_premium_bloc.dart';
 import '../blocs/event/apply_premium_event.dart';
 import '../blocs/state/apply_premium_state.dart';
+import '../l10n/app_localizations.dart';
 
 class ApplyPremiumPage extends StatefulWidget {
   final String? myPremiumCode;
@@ -68,9 +69,9 @@ class _ApplyPremiumPageState extends State<ApplyPremiumPage> {
                       backgroundColor: Colors.transparent,
                       elevation: 0,
                       leading: const BackButton(color: Colors.white),
-                      title: const Text(
-                        'Активувати преміум',
-                        style: TextStyle(color: Colors.white),
+                      title: Text(
+                        AppLocalizations.of(context)!.activatePremium,
+                        style: const TextStyle(color: Colors.white),
                       ),
                       centerTitle: true,
                     ),
@@ -94,9 +95,10 @@ class _ApplyPremiumPageState extends State<ApplyPremiumPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      'Ваш преміум-код для друга',
-                                      style: TextStyle(
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .yourPremiumCodeForFriend,
+                                      style: const TextStyle(
                                         color: Colors.white70,
                                         fontSize: 13,
                                         fontWeight: FontWeight.w500,
@@ -124,14 +126,16 @@ class _ApplyPremiumPageState extends State<ApplyPremiumPage> {
                       child: TextField(
                         controller: _controllerPremium,
                         style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          labelText: 'Введіть преміум-код',
-                          labelStyle: TextStyle(color: Colors.white70),
-                          hintText: 'Наприклад: PREM123',
-                          hintStyle: TextStyle(color: Colors.white54),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!
+                              .enterPremiumCode,
+                          labelStyle: const TextStyle(color: Colors.white70),
+                          hintText:
+                              AppLocalizations.of(context)!.premiumCodeExample,
+                          hintStyle: const TextStyle(color: Colors.white54),
                           filled: true,
                           fillColor: Colors.black26,
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide.none,
                           ),
@@ -154,8 +158,8 @@ class _ApplyPremiumPageState extends State<ApplyPremiumPage> {
                             : const Icon(Icons.star),
                         label: Text(
                           isLoading
-                              ? 'Застосовуємо…'
-                              : 'Активувати преміум',
+                              ? AppLocalizations.of(context)!.applying
+                              : AppLocalizations.of(context)!.activatePremium,
                         ),
                       ),
                     ),
@@ -175,8 +179,10 @@ class _ApplyPremiumPageState extends State<ApplyPremiumPage> {
                             children: [
                               Text(
                                 widget.havePremium == true
-                                    ? '✅ У вас активний преміум'
-                                    : '❌ Преміум не активний',
+                                    ? AppLocalizations.of(context)!
+                                        .premiumActive
+                                    : AppLocalizations.of(context)!
+                                        .premiumInactive,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -187,7 +193,10 @@ class _ApplyPremiumPageState extends State<ApplyPremiumPage> {
                                   widget.premiumTo != null) ...[
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Дійсний до: ${widget.premiumTo}',
+                                  AppLocalizations.of(context)!
+                                      .premiumValidUntil(
+                                    widget.premiumTo.toString(),
+                                  ),
                                   style: const TextStyle(
                                     color: Colors.white70,
                                     fontSize: 14,

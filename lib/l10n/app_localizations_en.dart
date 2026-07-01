@@ -142,4 +142,169 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseRestoreFailed => 'Failed to restore your purchase. Please try again later.';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get friend => 'Friend';
+
+  @override
+  String get signOutTakingTooLong => 'Signing out is taking too long. Please try again.';
+
+  @override
+  String get signOutFailed => 'Failed to sign out';
+
+  @override
+  String get userNotFound => 'User not found';
+
+  @override
+  String get user => 'User';
+
+  @override
+  String get notGenerated => 'Not generated';
+
+  @override
+  String get mainInfo => 'Main information';
+
+  @override
+  String get friendCodeLabel => 'Friend code';
+
+  @override
+  String get registrationDate => 'Registration date';
+
+  @override
+  String get friendStatus => 'Friend status';
+
+  @override
+  String get friendConnected => 'Friend connected';
+
+  @override
+  String get noFriendYet => 'No friend yet';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get signingOut => 'Signing out...';
+
+  @override
+  String get signOutAccount => 'Sign out';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get endFriendshipQuestion => 'End friendship?';
+
+  @override
+  String get endFriendshipDescription => 'You will no longer be connected as friends. You can add a new friend later.';
+
+  @override
+  String get endFriendshipAction => 'End';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get online => 'Online';
+
+  @override
+  String get offline => 'Offline';
+
+  @override
+  String get distanceLabel => 'Distance';
+
+  @override
+  String get friendsSinceLabel => 'Friends since';
+
+  @override
+  String get openChat => 'Open chat';
+
+  @override
+  String get changeFriend => 'Change friend';
+
+  @override
+  String get endFriendship => 'End friendship';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get codeCopied => 'Code copied';
+
+  @override
+  String get enterFriendCode => 'Enter your friend\'s code';
+
+  @override
+  String get friendCodeExample => 'For example: ABC123';
+
+  @override
+  String get adding => 'Adding...';
+
+  @override
+  String get changing => 'Changing...';
+
+  @override
+  String get onlineInBrackets => '(online)';
+
+  @override
+  String lastSeenAt(Object hour, Object minute) {
+    return '(last seen at $hour:$minute)';
+  }
+
+  @override
+  String get startConversation => 'Start the conversation';
+
+  @override
+  String get enterMessage => 'Enter a message...';
+
+  @override
+  String get noQuestionsAvailable => 'No questions available.';
+
+  @override
+  String questionProgress(int current, int total) {
+    return '$current of $total';
+  }
+
+  @override
+  String get activatePremium => 'Activate premium';
+
+  @override
+  String get yourPremiumCodeForFriend => 'Your premium code for a friend';
+
+  @override
+  String get enterPremiumCode => 'Enter premium code';
+
+  @override
+  String get premiumCodeExample => 'For example: PREM123';
+
+  @override
+  String get applying => 'Applying...';
+
+  @override
+  String get premiumActive => '✅ Premium is active';
+
+  @override
+  String get premiumInactive => '❌ Premium is not active';
+
+  @override
+  String premiumValidUntil(Object date) {
+    return 'Valid until: $date';
+  }
+
+  @override
+  String get selectYear => 'Select year';
+
+  @override
+  String get selectYearAndMonth => 'Select year and month';
+
+  @override
+  String get selectYearMonthAndDay => 'Select year, month, and day';
 }

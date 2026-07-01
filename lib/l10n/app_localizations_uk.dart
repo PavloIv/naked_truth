@@ -142,4 +142,169 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get purchaseRestoreFailed => 'Не вдалося відновити покупку. Спробуй пізніше.';
+
+  @override
+  String get account => 'Акаунт';
+
+  @override
+  String get friend => 'Друг';
+
+  @override
+  String get signOutTakingTooLong => 'Вихід триває занадто довго. Спробуй ще раз.';
+
+  @override
+  String get signOutFailed => 'Не вдалося вийти з акаунта';
+
+  @override
+  String get userNotFound => 'Користувача не знайдено';
+
+  @override
+  String get user => 'Користувач';
+
+  @override
+  String get notGenerated => 'Не згенеровано';
+
+  @override
+  String get mainInfo => 'Основна інформація';
+
+  @override
+  String get friendCodeLabel => 'Код друга';
+
+  @override
+  String get registrationDate => 'Дата реєстрації';
+
+  @override
+  String get friendStatus => 'Статус друга';
+
+  @override
+  String get friendConnected => 'Друг підключений';
+
+  @override
+  String get noFriendYet => 'Поки без друга';
+
+  @override
+  String get unknown => 'Невідомо';
+
+  @override
+  String get signingOut => 'Виходимо...';
+
+  @override
+  String get signOutAccount => 'Вийти з акаунта';
+
+  @override
+  String get cancel => 'Скасувати';
+
+  @override
+  String get remove => 'Прибрати';
+
+  @override
+  String get endFriendshipQuestion => 'Розірвати дружбу?';
+
+  @override
+  String get endFriendshipDescription => 'Ви більше не будете повʼязані як друзі. Пізніше можна буде додати нового друга.';
+
+  @override
+  String get endFriendshipAction => 'Розірвати';
+
+  @override
+  String get noData => 'Немає даних';
+
+  @override
+  String get online => 'Онлайн';
+
+  @override
+  String get offline => 'Офлайн';
+
+  @override
+  String get distanceLabel => 'Відстань';
+
+  @override
+  String get friendsSinceLabel => 'Дружимо';
+
+  @override
+  String get openChat => 'Відкрити чат';
+
+  @override
+  String get changeFriend => 'Змінити друга';
+
+  @override
+  String get endFriendship => 'Розірвати дружбу';
+
+  @override
+  String get copy => 'Скопіювати';
+
+  @override
+  String get share => 'Поділитися';
+
+  @override
+  String get codeCopied => 'Код скопійовано';
+
+  @override
+  String get enterFriendCode => 'Введіть код друга';
+
+  @override
+  String get friendCodeExample => 'Наприклад: ABC123';
+
+  @override
+  String get adding => 'Додаємо…';
+
+  @override
+  String get changing => 'Змінюємо…';
+
+  @override
+  String get onlineInBrackets => '(онлайн)';
+
+  @override
+  String lastSeenAt(Object hour, Object minute) {
+    return '(був о $hour:$minute)';
+  }
+
+  @override
+  String get startConversation => 'Почніть розмову';
+
+  @override
+  String get enterMessage => 'Введіть повідомлення...';
+
+  @override
+  String get noQuestionsAvailable => 'Немає доступних питань.';
+
+  @override
+  String questionProgress(int current, int total) {
+    return '$current з $total';
+  }
+
+  @override
+  String get activatePremium => 'Активувати преміум';
+
+  @override
+  String get yourPremiumCodeForFriend => 'Ваш преміум-код для друга';
+
+  @override
+  String get enterPremiumCode => 'Введіть преміум-код';
+
+  @override
+  String get premiumCodeExample => 'Наприклад: PREM123';
+
+  @override
+  String get applying => 'Застосовуємо…';
+
+  @override
+  String get premiumActive => '✅ У вас активний преміум';
+
+  @override
+  String get premiumInactive => '❌ Преміум не активний';
+
+  @override
+  String premiumValidUntil(Object date) {
+    return 'Дійсний до: $date';
+  }
+
+  @override
+  String get selectYear => 'Оберіть рік';
+
+  @override
+  String get selectYearAndMonth => 'Оберіть рік і місяць';
+
+  @override
+  String get selectYearMonthAndDay => 'Оберіть рік, місяць і день';
 }

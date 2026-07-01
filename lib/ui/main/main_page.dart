@@ -7,6 +7,7 @@ import '../../blocs/event/main_event.dart';
 import '../../blocs/state/main_state.dart';
 import '../../constants.dart';
 import '../../database/nt_database.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/category_topic.dart';
 import '../functional_widget/app_bar.dart';
 import '../functional_widget/custom_tab_bar_with_label.dart';
@@ -22,20 +23,17 @@ class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  final Map<String, String> categoriesTitle = {
-    'дорослі': 'Дорослі',
-    'пари': 'Пари',
-    'друзі': 'Друзі',
-  };
+  List<String> _tabTitles(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [l10n.adult, l10n.couples, l10n.friends];
+  }
 
-  List<String> get tabTitles => categoriesTitle.values.toList();
-
-  List<String> get categoryKeys => categoriesTitle.keys.toList();
+  List<String> get categoryKeys => ['дорослі', 'пари', 'друзі'];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: tabTitles.length, vsync: this);
+    _tabController = TabController(length: categoryKeys.length, vsync: this);
   }
 
   @override
@@ -46,13 +44,14 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    final tabTitles = _tabTitles(context);
     return BlocProvider(
       create: (_) =>
           MainBloc(database: context.read<NTDatabase>())..add(LoadMain()),
       child: BlocBuilder<MainBloc, MainState>(
         builder: (context, state) {
           if (state is MainLoaded) {
-            return _buildMain(state.topicsByCategory);
+            return _buildMain(state.topicsByCategory, tabTitles);
           }
           return Container(
             decoration: const BoxDecoration(
@@ -70,7 +69,10 @@ class _MainPageState extends State<MainPage>
     );
   }
 
-  Widget _buildMain(Map<String, List<CategoryTopic>> topicsByCategory) {
+  Widget _buildMain(
+    Map<String, List<CategoryTopic>> topicsByCategory,
+    List<String> tabTitles,
+  ) {
     return Container(
       decoration: const BoxDecoration(
         gradient: appBackgroundGradient,

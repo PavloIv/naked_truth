@@ -27,9 +27,12 @@ class _AuthGateState extends State<AuthGate> {
   bool _isPreparingSession = false;
   String? _preparedUid;
   Future<void>? _prepareFuture;
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
+      _userSettingsSubscription;
 
   @override
   void dispose() {
+    _userSettingsSubscription?.cancel();
     _presenceService.dispose();
     _locationService.stop();
     super.dispose();
@@ -47,10 +50,13 @@ class _AuthGateState extends State<AuthGate> {
   }
 
   Future<void> _runSessionPreparation() async {
-    await SettingsSyncService(
+    final settingsSyncService = SettingsSyncService(
       auth: FirebaseAuth.instance,
       firestore: FirebaseFirestore.instance,
-    ).syncUserSettings();
+    );
+
+    await settingsSyncService.syncUserSettings();
+    _startUserSettingsSync(settingsSyncService);
 
     _presenceService.init();
     unawaited(_locationService.startForCurrentUser());
@@ -68,8 +74,26 @@ class _AuthGateState extends State<AuthGate> {
     _preparedUid = null;
     _prepareFuture = null;
     _isPreparingSession = false;
+    _userSettingsSubscription?.cancel();
+    _userSettingsSubscription = null;
     _presenceService.dispose();
     _locationService.stop();
+  }
+
+  void _startUserSettingsSync(SettingsSyncService settingsSyncService) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) return;
+
+    _userSettingsSubscription?.cancel();
+    _userSettingsSubscription = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .snapshots()
+        .listen((_) async {
+      await settingsSyncService.syncUserSettings();
+      if (!mounted) return;
+      setState(() {});
+    });
   }
 
   @override

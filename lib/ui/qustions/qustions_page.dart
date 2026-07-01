@@ -5,6 +5,7 @@ import '../../blocs/bloc/questions_bloc.dart';
 import '../../blocs/event/questions_event.dart';
 import '../../blocs/state/questions_state.dart';
 import '../../constants.dart';
+import '../../l10n/app_localizations.dart';
 import '../../utils/converters.dart';
 
 class QuestionsPage extends StatefulWidget {
@@ -60,12 +61,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
                     child: CircularProgressIndicator(color: Colors.white),
                   );
                 } else if (state is QuestionsEmpty) {
-                  return const Center(
+                  return Center(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(
-                        'Немає доступних питань.',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.noQuestionsAvailable,
+                        style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -96,7 +97,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
                             ),
                             const Spacer(),
                             Text(
-                              '${state.currentIndex + 1} з ${state.questions.length}',
+                              AppLocalizations.of(context)!.questionProgress(
+                                state.currentIndex + 1,
+                                state.questions.length,
+                              ),
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w800,
@@ -173,9 +177,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                 borderRadius: BorderRadius.circular(18),
                               ),
                             ),
-                            child: const Text(
-                              'Поділитися',
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.share,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.white,

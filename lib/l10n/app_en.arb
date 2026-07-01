@@ -51,5 +51,79 @@
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
   "purchaseRestored": "Your purchase has been successfully restored.",
-  "purchaseRestoreFailed": "Failed to restore your purchase. Please try again later."
+  "purchaseRestoreFailed": "Failed to restore your purchase. Please try again later.",
+  "account": "Account",
+  "friend": "Friend",
+  "signOutTakingTooLong": "Signing out is taking too long. Please try again.",
+  "signOutFailed": "Failed to sign out",
+  "userNotFound": "User not found",
+  "user": "User",
+  "notGenerated": "Not generated",
+  "mainInfo": "Main information",
+  "friendCodeLabel": "Friend code",
+  "registrationDate": "Registration date",
+  "friendStatus": "Friend status",
+  "friendConnected": "Friend connected",
+  "noFriendYet": "No friend yet",
+  "unknown": "Unknown",
+  "signingOut": "Signing out...",
+  "signOutAccount": "Sign out",
+  "cancel": "Cancel",
+  "remove": "Remove",
+  "endFriendshipQuestion": "End friendship?",
+  "endFriendshipDescription": "You will no longer be connected as friends. You can add a new friend later.",
+  "endFriendshipAction": "End",
+  "noData": "No data",
+  "online": "Online",
+  "offline": "Offline",
+  "distanceLabel": "Distance",
+  "friendsSinceLabel": "Friends since",
+  "openChat": "Open chat",
+  "changeFriend": "Change friend",
+  "endFriendship": "End friendship",
+  "copy": "Copy",
+  "share": "Share",
+  "codeCopied": "Code copied",
+  "enterFriendCode": "Enter your friend's code",
+  "friendCodeExample": "For example: ABC123",
+  "adding": "Adding...",
+  "changing": "Changing...",
+  "onlineInBrackets": "(online)",
+  "lastSeenAt": "(last seen at {hour}:{minute})",
+  "@lastSeenAt": {
+    "placeholders": {
+      "hour": {},
+      "minute": {}
+    }
+  },
+  "startConversation": "Start the conversation",
+  "enterMessage": "Enter a message...",
+  "noQuestionsAvailable": "No questions available.",
+  "questionProgress": "{current} of {total}",
+  "@questionProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "activatePremium": "Activate premium",
+  "yourPremiumCodeForFriend": "Your premium code for a friend",
+  "enterPremiumCode": "Enter premium code",
+  "premiumCodeExample": "For example: PREM123",
+  "applying": "Applying...",
+  "premiumActive": "✅ Premium is active",
+  "premiumInactive": "❌ Premium is not active",
+  "premiumValidUntil": "Valid until: {date}",
+  "@premiumValidUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "selectYear": "Select year",
+  "selectYearAndMonth": "Select year and month",
+  "selectYearMonthAndDay": "Select year, month, and day"
 }

@@ -9,6 +9,7 @@ import '../blocs/bloc/auth_bloc.dart';
 import '../blocs/event/auth_event.dart';
 import '../blocs/state/auth_state.dart';
 import '../constants.dart';
+import '../l10n/app_localizations.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -49,8 +50,10 @@ class _AccountPageState extends State<AccountPage> {
       });
       debugPrint('AccountPage._handleSignOut: timeout');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Вихід триває занадто довго. Спробуй ще раз.'),
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)!.signOutTakingTooLong,
+          ),
         ),
       );
       return;
@@ -71,7 +74,9 @@ class _AccountPageState extends State<AccountPage> {
     debugPrint('AccountPage._handleSignOut: failure ${nextState.error}');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(nextState.error ?? 'Не вдалося вийти з акаунта'),
+        content: Text(
+          nextState.error ?? AppLocalizations.of(context)!.signOutFailed,
+        ),
       ),
     );
   }
@@ -87,9 +92,9 @@ class _AccountPageState extends State<AccountPage> {
         body: Container(
           decoration: const BoxDecoration(gradient: appBackgroundGradient),
           alignment: Alignment.center,
-          child: const Text(
-            'Користувача не знайдено',
-            style: TextStyle(color: Colors.white),
+          child: Text(
+            AppLocalizations.of(context)!.userNotFound,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       );
@@ -111,9 +116,9 @@ class _AccountPageState extends State<AccountPage> {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   leading: const BackButton(color: Colors.white),
-                  title: const Text(
-                    'Акаунт',
-                    style: TextStyle(color: Colors.white),
+                  title: Text(
+                    AppLocalizations.of(context)!.account,
+                    style: const TextStyle(color: Colors.white),
                   ),
                   centerTitle: true,
                 ),
@@ -135,15 +140,21 @@ class _AccountPageState extends State<AccountPage> {
                       final displayName =
                           (data['displayName'] as String?)?.trim().isNotEmpty ==
                                   true
-                              ? data['displayName'] as String
-                              : (user.displayName?.trim().isNotEmpty == true
-                                  ? user.displayName!
-                                  : 'Користувач');
+                                  ? data['displayName'] as String
+                                  : (user.displayName?.trim().isNotEmpty == true
+                                      ? user.displayName!
+                                      : AppLocalizations.of(context)!.user);
                       final email =
-                          (data['email'] as String?) ?? user.email ?? 'Не вказано';
+                          (data['email'] as String?) ??
+                              user.email ??
+                              AppLocalizations.of(context)!.notSpecified;
                       final friendCode =
-                          (data['friendCode'] as String?) ?? 'Не згенеровано';
-                      final createdAt = _formatCreatedAt(data['createdAt']);
+                          (data['friendCode'] as String?) ??
+                              AppLocalizations.of(context)!.notGenerated;
+                      final createdAt = _formatCreatedAt(
+                        context,
+                        data['createdAt'],
+                      );
                       final hasFriend = _hasFriend(data['friends']);
 
                       return LayoutBuilder(
@@ -164,25 +175,32 @@ class _AccountPageState extends State<AccountPage> {
                                       photoUrl: user.photoURL,
                                     ),
                                     const SizedBox(height: 16),
-                                    const _SectionTitle(title: 'Основна інформація'),
+                                    _SectionTitle(
+                                      title: AppLocalizations.of(context)!.mainInfo,
+                                    ),
                                     const SizedBox(height: 10),
                                     _InfoCard(
                                       children: [
                                         _InfoRow(
-                                          label: 'Friend code',
+                                          label: AppLocalizations.of(context)!
+                                              .friendCodeLabel,
                                           value: friendCode,
                                           icon: Icons.qr_code_2_rounded,
                                         ),
                                         _InfoRow(
-                                          label: 'Дата реєстрації',
+                                          label: AppLocalizations.of(context)!
+                                              .registrationDate,
                                           value: createdAt,
                                           icon: Icons.calendar_month_outlined,
                                         ),
                                         _InfoRow(
-                                          label: 'Статус друга',
+                                          label:
+                                              AppLocalizations.of(context)!.friendStatus,
                                           value: hasFriend
-                                              ? 'Друг підключений'
-                                              : 'Поки без друга',
+                                              ? AppLocalizations.of(context)!
+                                                  .friendConnected
+                                              : AppLocalizations.of(context)!
+                                                  .noFriendYet,
                                           icon: Icons.favorite_border,
                                         ),
                                       ],
@@ -221,13 +239,13 @@ class _AccountPageState extends State<AccountPage> {
     return false;
   }
 
-  static String _formatCreatedAt(dynamic raw) {
+  String _formatCreatedAt(BuildContext context, dynamic raw) {
     DateTime? dt;
     if (raw is Timestamp) {
       dt = raw.toDate();
     }
     if (dt == null) {
-      return 'Невідомо';
+      return AppLocalizations.of(context)!.unknown;
     }
     final day = dt.day.toString().padLeft(2, '0');
     final month = dt.month.toString().padLeft(2, '0');
@@ -440,7 +458,9 @@ class _SignOutButton extends StatelessWidget {
                 )
               : const Icon(Icons.logout_rounded, color: Colors.white),
           label: Text(
-            isLoading ? 'Виходимо...' : 'Вийти з акаунта',
+            isLoading
+                ? AppLocalizations.of(context)!.signingOut
+                : AppLocalizations.of(context)!.signOutAccount,
             style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           style: ElevatedButton.styleFrom(

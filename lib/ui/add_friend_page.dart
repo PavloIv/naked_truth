@@ -6,9 +6,15 @@ import '../constants.dart';
 import '../blocs/bloc/add_friend_bloc.dart';
 import '../blocs/event/add_friend_event.dart';
 import '../blocs/state/add_friend_state.dart';
+import '../l10n/app_localizations.dart';
 
 class AddFriendPage extends StatelessWidget {
-  const AddFriendPage({super.key});
+  final bool replaceExistingFriend;
+
+  const AddFriendPage({
+    super.key,
+    this.replaceExistingFriend = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,12 @@ class AddFriendPage extends StatelessWidget {
     void addFriend() {
       final code = controllerFriend.text.trim();
       if (code.isNotEmpty) {
-        context.read<AddFriendBloc>().add(AddFriendByCode(code));
+        context.read<AddFriendBloc>().add(
+              AddFriendByCode(
+                code,
+                replaceExistingFriend: replaceExistingFriend,
+              ),
+            );
       }
     }
 
@@ -34,13 +45,16 @@ class AddFriendPage extends StatelessWidget {
           SafeArea(
             child: BlocConsumer<AddFriendBloc, AddFriendState>(
               listener: (context, state) {
-                if (state is AddFriendSuccess || state is AddFriendFailure) {
+                if (state is AddFriendSuccess) {
+                  Navigator.of(context).pop(true);
+                  return;
+                }
+
+                if (state is AddFriendFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        state is AddFriendSuccess
-                            ? state.message
-                            : (state as AddFriendFailure).error,
+                        state.error,
                       ),
                     ),
                   );
@@ -60,9 +74,11 @@ class AddFriendPage extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       elevation: 0,
                       leading: const BackButton(color: Colors.white),
-                      title: const Text(
-                        'Додати друга',
-                        style: TextStyle(color: Colors.white),
+                      title: Text(
+                        replaceExistingFriend
+                            ? AppLocalizations.of(context)!.changeFriend
+                            : AppLocalizations.of(context)!.addFriend,
+                        style: const TextStyle(color: Colors.white),
                       ),
                       centerTitle: true,
                     ),
@@ -92,7 +108,7 @@ class AddFriendPage extends StatelessWidget {
                                 ),
                               ),
                               IconButton(
-                                tooltip: 'Скопіювати',
+                                tooltip: AppLocalizations.of(context)!.copy,
                                 icon: const Icon(Icons.copy,
                                     color: Colors.white),
                                 onPressed: () async {
@@ -100,15 +116,17 @@ class AddFriendPage extends StatelessWidget {
                                       ClipboardData(text: myFriendCode!));
                                   if (context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Код скопійовано'),
+                                      SnackBar(
+                                        content: Text(
+                                          AppLocalizations.of(context)!.codeCopied,
+                                        ),
                                       ),
                                     );
                                   }
                                 },
                               ),
                               IconButton(
-                                tooltip: 'Поділитися',
+                                tooltip: AppLocalizations.of(context)!.share,
                                 icon: const Icon(Icons.share,
                                     color: Colors.white),
                                 onPressed: () {
@@ -127,14 +145,16 @@ class AddFriendPage extends StatelessWidget {
                       child: TextField(
                         controller: controllerFriend,
                         style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          labelText: 'Введіть friend-код друга',
-                          labelStyle: TextStyle(color: Colors.white70),
-                          hintText: 'Наприклад: ABC123',
-                          hintStyle: TextStyle(color: Colors.white54),
+                        decoration: InputDecoration(
+                          labelText:
+                              AppLocalizations.of(context)!.enterFriendCode,
+                          labelStyle: const TextStyle(color: Colors.white70),
+                          hintText:
+                              AppLocalizations.of(context)!.friendCodeExample,
+                          hintStyle: const TextStyle(color: Colors.white54),
                           filled: true,
                           fillColor: Colors.black26,
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide.none,
                           ),
@@ -146,16 +166,55 @@ class AddFriendPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: ElevatedButton.icon(
-                        onPressed: isLoading ? null : addFriend,
-                        icon: isLoading
-                            ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                            : const Icon(Icons.check_circle_outline),
-                        label: Text(isLoading ? 'Додаємо…' : 'Додати друга'),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 52,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: pinkPurpleGradient,
+                            borderRadius: BorderRadius.circular(26),
+                          ),
+                          child: ElevatedButton.icon(
+                            onPressed: isLoading ? null : addFriend,
+                            icon: isLoading
+                                ? const SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor:
+                                          AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.check_circle_outline,
+                                    color: Colors.white,
+                                  ),
+                            label: Text(
+                              isLoading
+                                  ? (replaceExistingFriend
+                                      ? AppLocalizations.of(context)!.changing
+                                      : AppLocalizations.of(context)!.adding)
+                                  : (replaceExistingFriend
+                                      ? AppLocalizations.of(context)!
+                                          .changeFriend
+                                      : AppLocalizations.of(context)!.addFriend),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(26),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

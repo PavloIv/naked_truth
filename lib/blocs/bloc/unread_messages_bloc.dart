@@ -35,6 +35,7 @@ class UnreadMessagesBloc extends Bloc<UnreadMessagesEvent, UnreadMessagesState> 
         add(UnreadCountChanged(count,friendUid,friendName,friendCode));
       });
     } else {
+      emit(UnreadInitial());
       if (kDebugMode) {
         print("⚠️ Не знайдено жодного friendUid у SPUserData");
       }

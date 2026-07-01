@@ -49,5 +49,79 @@
 "termsAndConditions": "Умови використання",
 "privacyPolicy": "Політика конфіденційності",
 "purchaseRestored": "Покупку успішно відновлено.",
-"purchaseRestoreFailed": "Не вдалося відновити покупку. Спробуй пізніше."
+"purchaseRestoreFailed": "Не вдалося відновити покупку. Спробуй пізніше.",
+"account": "Акаунт",
+"friend": "Друг",
+"signOutTakingTooLong": "Вихід триває занадто довго. Спробуй ще раз.",
+"signOutFailed": "Не вдалося вийти з акаунта",
+"userNotFound": "Користувача не знайдено",
+"user": "Користувач",
+"notGenerated": "Не згенеровано",
+"mainInfo": "Основна інформація",
+"friendCodeLabel": "Код друга",
+"registrationDate": "Дата реєстрації",
+"friendStatus": "Статус друга",
+"friendConnected": "Друг підключений",
+"noFriendYet": "Поки без друга",
+"unknown": "Невідомо",
+"signingOut": "Виходимо...",
+"signOutAccount": "Вийти з акаунта",
+"cancel": "Скасувати",
+"remove": "Прибрати",
+"endFriendshipQuestion": "Розірвати дружбу?",
+"endFriendshipDescription": "Ви більше не будете повʼязані як друзі. Пізніше можна буде додати нового друга.",
+"endFriendshipAction": "Розірвати",
+"noData": "Немає даних",
+"online": "Онлайн",
+"offline": "Офлайн",
+"distanceLabel": "Відстань",
+"friendsSinceLabel": "Дружимо",
+"openChat": "Відкрити чат",
+"changeFriend": "Змінити друга",
+"endFriendship": "Розірвати дружбу",
+"copy": "Скопіювати",
+"share": "Поділитися",
+"codeCopied": "Код скопійовано",
+"enterFriendCode": "Введіть код друга",
+"friendCodeExample": "Наприклад: ABC123",
+"adding": "Додаємо…",
+"changing": "Змінюємо…",
+"onlineInBrackets": "(онлайн)",
+"lastSeenAt": "(був о {hour}:{minute})",
+"@lastSeenAt": {
+  "placeholders": {
+    "hour": {},
+    "minute": {}
+  }
+},
+"startConversation": "Почніть розмову",
+"enterMessage": "Введіть повідомлення...",
+"noQuestionsAvailable": "Немає доступних питань.",
+"questionProgress": "{current} з {total}",
+"@questionProgress": {
+  "placeholders": {
+    "current": {
+      "type": "int"
+    },
+    "total": {
+      "type": "int"
+    }
+  }
+},
+"activatePremium": "Активувати преміум",
+"yourPremiumCodeForFriend": "Ваш преміум-код для друга",
+"enterPremiumCode": "Введіть преміум-код",
+"premiumCodeExample": "Наприклад: PREM123",
+"applying": "Застосовуємо…",
+"premiumActive": "✅ У вас активний преміум",
+"premiumInactive": "❌ Преміум не активний",
+"premiumValidUntil": "Дійсний до: {date}",
+"@premiumValidUntil": {
+  "placeholders": {
+    "date": {}
+  }
+},
+"selectYear": "Оберіть рік",
+"selectYearAndMonth": "Оберіть рік і місяць",
+"selectYearMonthAndDay": "Оберіть рік, місяць і день"
 }

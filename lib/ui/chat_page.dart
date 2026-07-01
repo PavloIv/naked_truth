@@ -7,6 +7,7 @@ import '../constants.dart';
 import '../blocs/bloc/chat_bloc.dart';
 import '../blocs/event/chat_event.dart';
 import '../blocs/state/chat_state.dart';
+import '../l10n/app_localizations.dart';
 
 class ChatPage extends StatelessWidget {
   final String friendUid;
@@ -100,9 +101,16 @@ class _ChatViewState extends State<_ChatView> {
                       String subtitle = '';
                       if (state is ChatLoaded) {
                         subtitle = state.isFriendOnline
-                            ? '(онлайн)'
+                            ? AppLocalizations.of(context)!.onlineInBrackets
                             : state.friendLastSeen != null
-                            ? '(був о ${state.friendLastSeen!.hour.toString().padLeft(2, '0')}:${state.friendLastSeen!.minute.toString().padLeft(2, '0')})'
+                            ? AppLocalizations.of(context)!.lastSeenAt(
+                                state.friendLastSeen!.hour
+                                    .toString()
+                                    .padLeft(2, '0'),
+                                state.friendLastSeen!.minute
+                                    .toString()
+                                    .padLeft(2, '0'),
+                              )
                             : '';
                       }
                       return AppBar(
@@ -165,12 +173,12 @@ class _ChatViewState extends State<_ChatView> {
                             },
                           );
                         }
-                        return const Center(
+                        return Center(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 32),
+                            padding: const EdgeInsets.symmetric(horizontal: 32),
                             child: Text(
-                              'Почніть розмову',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.startConversation,
+                              style: const TextStyle(
                                 color: Colors.white70,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -205,11 +213,14 @@ class _ChatViewState extends State<_ChatView> {
                                 textInputAction: TextInputAction.send,
                                 onSubmitted: (_) => _send(),
                                 style: const TextStyle(color: Colors.white),
-                                decoration: const InputDecoration(
-                                  hintText: 'Введіть повідомлення...',
-                                  hintStyle: TextStyle(color: Colors.white70),
+                                decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!
+                                      .enterMessage,
+                                  hintStyle: const TextStyle(
+                                    color: Colors.white70,
+                                  ),
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12, vertical: 12),
                                 ),
                               ),
