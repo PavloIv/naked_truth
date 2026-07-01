@@ -8,3 +8,9 @@ class AddFriendByCode extends AddFriendEvent {
 
   AddFriendByCode(this.code, {this.replaceExistingFriend = false});
 }
+
+class AcceptIncomingFriendRequest extends AddFriendEvent {}
+
+class DeclineIncomingFriendRequest extends AddFriendEvent {}
+
+class CancelOutgoingFriendRequest extends AddFriendEvent {}

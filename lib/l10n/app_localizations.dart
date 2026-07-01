@@ -311,6 +311,12 @@ abstract class AppLocalizations {
   /// **'Add friend'**
   String get addFriend;
 
+  /// No description provided for @sendFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get sendFriendRequest;
+
   /// No description provided for @myFriend.
   ///
   /// In en, this message translates to:
@@ -580,6 +586,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Changing...'**
   String get changing;
+
+  /// No description provided for @incomingFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming request'**
+  String get incomingFriendRequest;
+
+  /// No description provided for @outgoingFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent request'**
+  String get outgoingFriendRequest;
+
+  /// No description provided for @friendRequestFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Request from {name}'**
+  String friendRequestFrom(Object name);
+
+  /// No description provided for @friendRequestTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Request to {name}'**
+  String friendRequestTo(Object name);
+
+  /// No description provided for @acceptFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get acceptFriendRequest;
+
+  /// No description provided for @declineFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get declineFriendRequest;
+
+  /// No description provided for @cancelFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get cancelFriendRequest;
+
+  /// No description provided for @waitingForFriendConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendship will be created only after the other user confirms it.'**
+  String get waitingForFriendConfirmation;
+
+  /// No description provided for @pendingRequestBlocksNewOne.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t send a new friendship request while another one is active.'**
+  String get pendingRequestBlocksNewOne;
+
+  /// No description provided for @friendWillReplaceCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'After confirmation, a new friendship will be created.'**
+  String get friendWillReplaceCurrent;
 
   /// No description provided for @onlineInBrackets.
   ///

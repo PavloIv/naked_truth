@@ -117,6 +117,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get addFriend => 'Додати друга';
 
   @override
+  String get sendFriendRequest => 'Надіслати запит';
+
+  @override
   String get myFriend => 'Мій друг';
 
   @override
@@ -250,6 +253,40 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get changing => 'Змінюємо…';
+
+  @override
+  String get incomingFriendRequest => 'Вхідний запит';
+
+  @override
+  String get outgoingFriendRequest => 'Надісланий запит';
+
+  @override
+  String friendRequestFrom(Object name) {
+    return 'Запит від $name';
+  }
+
+  @override
+  String friendRequestTo(Object name) {
+    return 'Запит для $name';
+  }
+
+  @override
+  String get acceptFriendRequest => 'Підтвердити';
+
+  @override
+  String get declineFriendRequest => 'Відхилити';
+
+  @override
+  String get cancelFriendRequest => 'Скасувати запит';
+
+  @override
+  String get waitingForFriendConfirmation => 'Дружба створиться тільки після підтвердження іншого користувача.';
+
+  @override
+  String get pendingRequestBlocksNewOne => 'Поки є активний запит, новий запит на дружбу надіслати не можна.';
+
+  @override
+  String get friendWillReplaceCurrent => 'Після підтвердження буде створено нову дружбу.';
 
   @override
   String get onlineInBrackets => '(онлайн)';

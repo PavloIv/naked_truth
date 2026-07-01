@@ -117,6 +117,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addFriend => 'Add friend';
 
   @override
+  String get sendFriendRequest => 'Send request';
+
+  @override
   String get myFriend => 'My friend';
 
   @override
@@ -250,6 +253,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changing => 'Changing...';
+
+  @override
+  String get incomingFriendRequest => 'Incoming request';
+
+  @override
+  String get outgoingFriendRequest => 'Sent request';
+
+  @override
+  String friendRequestFrom(Object name) {
+    return 'Request from $name';
+  }
+
+  @override
+  String friendRequestTo(Object name) {
+    return 'Request to $name';
+  }
+
+  @override
+  String get acceptFriendRequest => 'Accept';
+
+  @override
+  String get declineFriendRequest => 'Decline';
+
+  @override
+  String get cancelFriendRequest => 'Cancel request';
+
+  @override
+  String get waitingForFriendConfirmation => 'Friendship will be created only after the other user confirms it.';
+
+  @override
+  String get pendingRequestBlocksNewOne => 'You can\'t send a new friendship request while another one is active.';
+
+  @override
+  String get friendWillReplaceCurrent => 'After confirmation, a new friendship will be created.';
 
   @override
   String get onlineInBrackets => '(online)';

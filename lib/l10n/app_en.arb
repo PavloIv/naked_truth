@@ -43,6 +43,7 @@
   "getPremium": "Get Premium",
   "restorePurchase": "Restore Purchase",
   "addFriend": "Add friend",
+  "sendFriendRequest": "Send request",
   "myFriend": "My friend",
   "usePremiumCode": "Use premium code",
   "other": "Other",
@@ -88,6 +89,26 @@
   "friendCodeExample": "For example: ABC123",
   "adding": "Adding...",
   "changing": "Changing...",
+  "incomingFriendRequest": "Incoming request",
+  "outgoingFriendRequest": "Sent request",
+  "friendRequestFrom": "Request from {name}",
+  "@friendRequestFrom": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "friendRequestTo": "Request to {name}",
+  "@friendRequestTo": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "acceptFriendRequest": "Accept",
+  "declineFriendRequest": "Decline",
+  "cancelFriendRequest": "Cancel request",
+  "waitingForFriendConfirmation": "Friendship will be created only after the other user confirms it.",
+  "pendingRequestBlocksNewOne": "You can't send a new friendship request while another one is active.",
+  "friendWillReplaceCurrent": "After confirmation, a new friendship will be created.",
   "onlineInBrackets": "(online)",
   "lastSeenAt": "(last seen at {hour}:{minute})",
   "@lastSeenAt": {

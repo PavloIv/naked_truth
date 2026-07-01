@@ -41,6 +41,7 @@
 "getPremium": "Отримати Premium",
 "restorePurchase": "Відновити покупку",
 "addFriend": "Додати друга",
+"sendFriendRequest": "Надіслати запит",
 "myFriend": "Мій друг",
 "usePremiumCode": "Ввести преміум-код",
 "other": "Інше",
@@ -86,6 +87,26 @@
 "friendCodeExample": "Наприклад: ABC123",
 "adding": "Додаємо…",
 "changing": "Змінюємо…",
+"incomingFriendRequest": "Вхідний запит",
+"outgoingFriendRequest": "Надісланий запит",
+"friendRequestFrom": "Запит від {name}",
+"@friendRequestFrom": {
+  "placeholders": {
+    "name": {}
+  }
+},
+"friendRequestTo": "Запит для {name}",
+"@friendRequestTo": {
+  "placeholders": {
+    "name": {}
+  }
+},
+"acceptFriendRequest": "Підтвердити",
+"declineFriendRequest": "Відхилити",
+"cancelFriendRequest": "Скасувати запит",
+"waitingForFriendConfirmation": "Дружба створиться тільки після підтвердження іншого користувача.",
+"pendingRequestBlocksNewOne": "Поки є активний запит, новий запит на дружбу надіслати не можна.",
+"friendWillReplaceCurrent": "Після підтвердження буде створено нову дружбу.",
 "onlineInBrackets": "(онлайн)",
 "lastSeenAt": "(був о {hour}:{minute})",
 "@lastSeenAt": {
