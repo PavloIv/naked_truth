@@ -56,9 +56,24 @@ class _QuestionsPageState extends State<QuestionsPage> {
             child: BlocBuilder<QuestionsBloc, QuestionsState>(
               builder: (context, state) {
                 if (state is QuestionsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  );
                 } else if (state is QuestionsEmpty) {
-                  return const Center(child: Text('😕 Немає доступних питань.'));
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'Немає доступних питань.',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
                 } else if (state is QuestionsLoaded) {
                   final questions = state.questions;
                   final currentQuestion = questions[state.currentIndex];
@@ -67,7 +82,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                   return Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
                         child: Row(
                           children: [
                             IconButton(
@@ -84,7 +99,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                               '${state.currentIndex + 1} з ${state.questions.length}',
                               style: const TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w800,
                                 color: Colors.white,
                               ),
                             ),
@@ -138,22 +153,24 @@ class _QuestionsPageState extends State<QuestionsPage> {
                       ),
                       Center(
                         child: Container(
-                          height: 46,
+                          height: 48,
                           width: cardWidth,
                           decoration: BoxDecoration(
                             gradient: pinkPurpleGradient,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(18),
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              Share.share(currentQuestion.question);
+                              SharePlus.instance.share(
+                                ShareParams(text: currentQuestion.question),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
+                                borderRadius: BorderRadius.circular(18),
                               ),
                             ),
                             child: const Text(
@@ -167,7 +184,11 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 56),
+                      const SizedBox(height: 32),
+                      const SafeArea(
+                        top: false,
+                        child: SizedBox(height: 12),
+                      ),
                     ],
                   );
                 }
@@ -196,10 +217,10 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       height: MediaQuery.of(context).size.height * 0.55,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(20),
         gradient: const LinearGradient(
           colors: [
             Color.fromRGBO(255, 255, 255, 0.16),
@@ -212,7 +233,7 @@ class QuestionCard extends StatelessWidget {
       padding: const EdgeInsets.all(2),
       child: Card(
         elevation: 8,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         margin: EdgeInsets.zero,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -222,8 +243,8 @@ class QuestionCard extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: Converters().getGradientByTopic('Default'),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+                  topLeft: Radius.circular(18),
+                  topRight: Radius.circular(18),
                 ),
               ),
               alignment: Alignment.center,
@@ -244,22 +265,23 @@ class QuestionCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: Converters().getGradientByTopic('Default'),
                       borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(16),
+                        bottomLeft: Radius.circular(18),
+                        bottomRight: Radius.circular(18),
                       ),
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(16),
+                        bottomLeft: Radius.circular(18),
+                        bottomRight: Radius.circular(18),
                       ),
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                     child: Column(
                       children: [
                         const Spacer(),
@@ -270,7 +292,7 @@ class QuestionCard extends StatelessWidget {
                             fontSize: 22,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
-                            height: 1.5,
+                            height: 1.45,
                           ),
                         ),
                         const Spacer(),

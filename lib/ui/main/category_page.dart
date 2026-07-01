@@ -4,6 +4,22 @@ import '../../utils/converters.dart';
 import '../qustions/qustions_page.dart';
 
 class CategoryPage extends StatelessWidget {
+  static const _pagePadding = EdgeInsets.all(16);
+  static const _cardPadding = EdgeInsets.symmetric(horizontal: 14, vertical: 18);
+  static const _titleStyle = TextStyle(
+    fontSize: 17,
+    fontFamily: 'Bitter',
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    height: 1.2,
+  );
+  static const _descriptionStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+    height: 1.35,
+  );
+
   final List<CategoryTopic> topics;
   final String category;
 
@@ -16,13 +32,13 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.all(12),
+      padding: _pagePadding,
       itemCount: topics.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.8,
+        crossAxisSpacing: 14,
+        mainAxisSpacing: 14,
+        childAspectRatio: 0.78,
       ),
       itemBuilder: (context, index) {
         final t = topics[index];
@@ -53,7 +69,7 @@ class CategoryPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                padding: _cardPadding,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -61,29 +77,20 @@ class CategoryPage extends StatelessWidget {
                       width: double.infinity,
                       child: Column(
                         children: [
-                          const SizedBox(height: 30,),
+                          const SizedBox(height: 18),
                           Text(
                             t.topic,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 17,
-                              fontFamily: 'Bitter',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            style: _titleStyle,
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 30,),
+                          const SizedBox(height: 16),
                           Text(
                             Converters().getDescriptionByTopic(t.topic),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            style: _descriptionStyle,
                             textAlign: TextAlign.center,
                           ),
                         ],

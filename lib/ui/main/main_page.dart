@@ -54,7 +54,17 @@ class _MainPageState extends State<MainPage>
           if (state is MainLoaded) {
             return _buildMain(state.topicsByCategory);
           }
-          return const Center(child: CircularProgressIndicator());
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: appBackgroundGradient,
+            ),
+            child: const Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              ),
+            ),
+          );
         },
       ),
     );

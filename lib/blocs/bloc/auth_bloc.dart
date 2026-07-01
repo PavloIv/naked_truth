@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../service/auth_service.dart';
 import '../event/auth_event.dart';
@@ -12,10 +13,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required this.service}) : super(const AuthState.unknown()) {
     _sub = service.authStateChanges().listen((user) {
+      debugPrint('AuthBloc.authStateChanges: user=${user?.uid}');
       add(AuthUserChanged(user));
     });
 
     on<AuthUserChanged>((e, emit) {
+      debugPrint('AuthBloc.AuthUserChanged: user=${e.user?.uid}');
       if (e.user != null) {
         emit(AuthState.authenticated(e.user!));
       } else {
@@ -48,8 +51,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<SignOutRequested>((e, emit) async {
-      await service.signOut();
-      emit(const AuthState.unauthenticated());
+      debugPrint('AuthBloc.SignOutRequested: start');
+      try {
+        await service.signOut();
+        debugPrint('AuthBloc.SignOutRequested: service.signOut complete');
+        emit(const AuthState.unauthenticated());
+      } catch (err) {
+        debugPrint('AuthBloc.SignOutRequested: failed: $err');
+        emit(AuthState.failure(err.toString()));
+      }
     });
   }
 

@@ -109,9 +109,25 @@ class _ChatViewState extends State<_ChatView> {
                         backgroundColor: Colors.transparent,
                         elevation: 0,
                         leading: const BackButton(color: Colors.white),
-                        title: Text(
-                          'Чат з ${widget.friendName} $subtitle',
-                          style: const TextStyle(color: Colors.white),
+                        title: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              widget.friendName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            if (subtitle.isNotEmpty)
+                              Text(
+                                subtitle,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                          ],
                         ),
                         centerTitle: true,
                       );
@@ -122,13 +138,15 @@ class _ChatViewState extends State<_ChatView> {
                     child: BlocBuilder<ChatBloc, ChatState>(
                       builder: (context, state) {
                         if (state is ChatLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                            child: CircularProgressIndicator(color: Colors.white),
+                          );
                         }
                         if (state is ChatLoaded && state.messages.isNotEmpty) {
                           return ListView.builder(
                             reverse: true,
                             controller: _scrollController,
-                            padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+                            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                             itemCount: state.messages.length,
                             itemBuilder: (context, index) {
                               final msg = state.messages[index];
@@ -149,10 +167,14 @@ class _ChatViewState extends State<_ChatView> {
                         }
                         return const Center(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            padding: EdgeInsets.symmetric(horizontal: 32),
                             child: Text(
-                              'Почніть розмову 😌',
-                              style: TextStyle(color: Colors.white70),
+                              'Почніть розмову',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -163,16 +185,18 @@ class _ChatViewState extends State<_ChatView> {
 
                   const Divider(height: 1, color: Colors.white24),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                     child: SafeArea(
                       top: false,
                       child: Container(
                         decoration: BoxDecoration(
                           gradient: settingTitleGradient,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(22),
                         ),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         child: Row(
                           children: [
                             Expanded(
@@ -228,7 +252,8 @@ class _MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Gradient bubbleGradient = isMe ? purpleGradient : settingTitleGradient;
+    final Gradient bubbleGradient =
+        isMe ? purpleGradient : settingTitleGradient;
     final borderRadius = BorderRadius.only(
       topLeft: const Radius.circular(16),
       topRight: const Radius.circular(16),
@@ -240,17 +265,24 @@ class _MessageBubble extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 320),
         child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 4),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
           decoration: BoxDecoration(
             gradient: bubbleGradient,
             borderRadius: borderRadius,
           ),
           child: Column(
             crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              Text(text, style: const TextStyle(color: Colors.white)),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  height: 1.35,
+                ),
+              ),
               const SizedBox(height: 6),
               Row(
                 mainAxisSize: MainAxisSize.min,

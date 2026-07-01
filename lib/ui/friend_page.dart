@@ -12,6 +12,8 @@ import '../blocs/bloc/friend_bloc.dart';
 import 'chat_page.dart';
 
 class MyFriendPage extends StatelessWidget {
+  static const _pagePadding = EdgeInsets.symmetric(horizontal: 16);
+
   final String friendUid;
   final String friendName;
   final String friendCode;
@@ -56,10 +58,10 @@ class MyFriendPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: _pagePadding,
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
                         gradient: purpleGradient,
                         borderRadius: BorderRadius.circular(24),
@@ -205,15 +207,19 @@ class MyFriendPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: _pagePadding,
                     child: Container(
                       decoration: BoxDecoration(
                         gradient: settingTitleGradient,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(18),
                       ),
                       child: BlocBuilder<FriendBloc, FriendState>(
                         builder: (context, state) {
                           return ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 18,
+                              vertical: 4,
+                            ),
                             leading: const Icon(Icons.chat_bubble_outline,
                                 color: Colors.white),
                             title: const Text(

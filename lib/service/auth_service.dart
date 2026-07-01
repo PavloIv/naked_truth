@@ -66,10 +66,19 @@ class AuthService {
   }
 
   Future<void> signOut() async {
+    debugPrint('AuthService.signOut: start');
     await _auth.signOut();
+    debugPrint('AuthService.signOut: FirebaseAuth signOut complete');
     try {
-      await GoogleSignIn.instance.disconnect();
-    } catch (_) {}
+      await GoogleSignIn.instance.signOut().timeout(
+        const Duration(seconds: 5),
+      );
+      debugPrint('AuthService.signOut: GoogleSignIn signOut complete');
+    } catch (err, st) {
+      debugPrint('AuthService.signOut: GoogleSignIn signOut failed: $err');
+      debugPrintStack(stackTrace: st);
+    }
+    debugPrint('AuthService.signOut: end');
   }
 
   Future<String> _generateUniqueFriendCode() async {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/bloc/auth_bloc.dart';
-import '../../blocs/event/auth_event.dart';
 import '../../l10n/app_localizations.dart';
+import '../account_page.dart';
 import 'friend_icon_with_badge.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -32,11 +32,18 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? null
           : [
               IconButton(
-                tooltip: 'Вийти',
-                onPressed: () async {
-                  context.read<AuthBloc>().add(const SignOutRequested());
+                tooltip: 'Акаунт',
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<AuthBloc>(),
+                        child: const AccountPage(),
+                      ),
+                    ),
+                  );
                 },
-                icon: const Icon(Icons.logout, color: Colors.white),
+                icon: const Icon(Icons.person_outline, color: Colors.white),
               ),
             ],
     );
