@@ -24,6 +24,7 @@ class AddFriendPage extends StatefulWidget {
 
 class _AddFriendPageState extends State<AddFriendPage> {
   late final TextEditingController _controllerFriend;
+  AddFriendLoaded? _lastLoadedState;
 
   @override
   void initState() {
@@ -65,10 +66,17 @@ class _AddFriendPageState extends State<AddFriendPage> {
           SafeArea(
             child: BlocConsumer<AddFriendBloc, AddFriendState>(
               listener: (context, state) {
+                if (state is AddFriendLoaded) {
+                  _lastLoadedState = state;
+                }
+
                 if (state is AddFriendSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
+                  if (!state.shouldClose) {
+                    _controllerFriend.clear();
+                  }
                   if (state.shouldClose) {
                     Navigator.of(context).pop(true);
                   }
@@ -82,17 +90,16 @@ class _AddFriendPageState extends State<AddFriendPage> {
                 }
               },
               builder: (context, state) {
-                String? myFriendCode;
-                FriendRequestInfo? incomingRequest;
-                FriendRequestInfo? outgoingRequest;
-
                 final isLoading = state is AddFriendLoading;
 
                 if (state is AddFriendLoaded) {
-                  myFriendCode = state.myFriendCode;
-                  incomingRequest = state.incomingRequest;
-                  outgoingRequest = state.outgoingRequest;
+                  _lastLoadedState = state;
                 }
+
+                final currentData = _lastLoadedState;
+                final myFriendCode = currentData?.myFriendCode;
+                final incomingRequest = currentData?.incomingRequest;
+                final outgoingRequest = currentData?.outgoingRequest;
 
                 final hasPendingRequest =
                     incomingRequest != null || outgoingRequest != null;
@@ -132,118 +139,93 @@ class _AddFriendPageState extends State<AddFriendPage> {
                                 isLoading: isLoading,
                               ),
                             ],
-                            const SizedBox(height: 24),
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 180),
-                              opacity: hasPendingRequest ? 0.55 : 1,
-                              child: IgnorePointer(
-                                ignoring: hasPendingRequest || isLoading,
-                                child: Column(
-                                  children: [
-                                    TextField(
-                                      controller: _controllerFriend,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)!
-                                            .enterFriendCode,
-                                        labelStyle: const TextStyle(
-                                          color: Colors.white70,
-                                        ),
-                                        hintText: AppLocalizations.of(context)!
-                                            .friendCodeExample,
-                                        hintStyle: const TextStyle(
-                                          color: Colors.white54,
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.black26,
-                                        border: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(16),
-                                          ),
-                                          borderSide: BorderSide.none,
-                                        ),
+                            if (!hasPendingRequest) ...[
+                              const SizedBox(height: 24),
+                              Column(
+                                children: [
+                                  TextField(
+                                    controller: _controllerFriend,
+                                    style:
+                                        const TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      labelText: AppLocalizations.of(context)!
+                                          .enterFriendCode,
+                                      labelStyle: const TextStyle(
+                                        color: Colors.white70,
                                       ),
-                                      textInputAction: TextInputAction.done,
-                                      onSubmitted: (_) => _addFriend(),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      height: 52,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          gradient: pinkPurpleGradient,
-                                          borderRadius:
-                                              BorderRadius.circular(26),
+                                      hintText: AppLocalizations.of(context)!
+                                          .friendCodeExample,
+                                      hintStyle: const TextStyle(
+                                        color: Colors.white54,
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.black26,
+                                      border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(16),
                                         ),
-                                        child: ElevatedButton.icon(
-                                          onPressed: isLoading ? null : _addFriend,
-                                          icon: isLoading
-                                              ? const SizedBox(
-                                                  width: 18,
-                                                  height: 18,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    strokeWidth: 2,
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      Colors.white,
-                                                    ),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    textInputAction: TextInputAction.done,
+                                    onSubmitted: (_) => _addFriend(),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 52,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        gradient: pinkPurpleGradient,
+                                        borderRadius:
+                                            BorderRadius.circular(26),
+                                      ),
+                                      child: ElevatedButton.icon(
+                                        onPressed: isLoading ? null : _addFriend,
+                                        icon: isLoading
+                                            ? const SizedBox(
+                                                width: 18,
+                                                height: 18,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    Colors.white,
                                                   ),
-                                                )
-                                              : const Icon(
-                                                  Icons.check_circle_outline,
-                                                  color: Colors.white,
                                                 ),
-                                          label: Text(
-                                            isLoading
-                                                ? (widget.replaceExistingFriend
-                                                    ? AppLocalizations.of(
-                                                            context)!
-                                                        .changing
-                                                    : AppLocalizations.of(
-                                                            context)!
-                                                        .adding)
-                                                : (widget.replaceExistingFriend
-                                                    ? AppLocalizations.of(
-                                                            context)!
-                                                        .sendFriendRequest
-                                                    : AppLocalizations.of(
-                                                            context)!
-                                                        .sendFriendRequest),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                              )
+                                            : const Icon(
+                                                Icons.check_circle_outline,
+                                                color: Colors.white,
+                                              ),
+                                        label: Text(
+                                          isLoading
+                                              ? (widget.replaceExistingFriend
+                                                  ? AppLocalizations.of(context)!
+                                                      .changing
+                                                  : AppLocalizations.of(context)!
+                                                      .adding)
+                                              : AppLocalizations.of(context)!
+                                                  .sendFriendRequest,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w700,
                                           ),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.transparent,
-                                            shadowColor: Colors.transparent,
-                                            foregroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(26),
-                                            ),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          shadowColor: Colors.transparent,
+                                          foregroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(26),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            if (hasPendingRequest) ...[
-                              const SizedBox(height: 14),
-                              Text(
-                                AppLocalizations.of(context)!
-                                    .pendingRequestBlocksNewOne,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 13,
-                                  height: 1.45,
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ],
@@ -394,8 +376,7 @@ class _OutgoingRequestCard extends StatelessWidget {
       requestCode: request.otherCode,
       trailingNote: l10n.waitingForFriendConfirmation,
       actions: [
-        SizedBox(
-          width: double.infinity,
+        Expanded(
           child: _RequestActionButton(
             label: l10n.cancelFriendRequest,
             gradient: settingTitleGradient,

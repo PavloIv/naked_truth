@@ -63,6 +63,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get signIn => 'Увійти';
 
   @override
+  String get signInWithGoogle => 'Увійти через Google';
+
+  @override
+  String get signInWithApple => 'Увійти через Apple';
+
+  @override
   String get signingIn => 'Вхід...';
 
   @override

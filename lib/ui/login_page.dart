@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../constants.dart';
 import '../blocs/bloc/auth_bloc.dart';
@@ -84,6 +86,9 @@ class _LoginPageState extends State<LoginPage> {
   bool _isGranted(LocationPermission p) =>
       p == LocationPermission.always || p == LocationPermission.whileInUse;
 
+  bool get _showAppleSignIn =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
   @override
   Widget build(BuildContext context) {
     final screenH = MediaQuery.of(context).size.height;
@@ -154,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                                     final isLoading =
                                         state.status == AuthStatus.authenticating;
 
-                                    Future<void> onSignIn() async {
+                                    Future<void> onGoogleSignIn() async {
                                       if (isLoading) return;
 
                                       const webClientId =
@@ -167,15 +172,25 @@ class _LoginPageState extends State<LoginPage> {
                                           );
                                     }
 
-                                    return SizedBox(
-                                      height: 52,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
+                                    Future<void> onAppleSignIn() async {
+                                      if (isLoading) return;
+                                      context.read<AuthBloc>().add(
+                                            const SignInWithApplePressed(),
+                                          );
+                                    }
+
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        _LoginActionButton(
+                                          label: isLoading
+                                              ? l10n.signingIn
+                                              : l10n.signInWithGoogle,
+                                          onPressed:
+                                              isLoading ? null : onGoogleSignIn,
                                           gradient: appBackgroundGradient,
-                                          borderRadius: BorderRadius.circular(26),
-                                        ),
-                                        child: ElevatedButton.icon(
-                                          onPressed: isLoading ? null : onSignIn,
+                                          foregroundColor: Colors.white,
                                           icon: isLoading
                                               ? const SizedBox(
                                                   width: 18,
@@ -190,24 +205,41 @@ class _LoginPageState extends State<LoginPage> {
                                                     ),
                                                   ),
                                                 )
-                                              : const Icon(Icons.login,
-                                                  color: Colors.white),
-                                          label: Text(
-                                            isLoading
-                                                ? l10n.signingIn
-                                                : l10n.signIn,
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.transparent,
-                                            shadowColor: Colors.transparent,
+                                              : const _AuthProviderBadge(
+                                                  child: Text(
+                                                    'G',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      height: 1,
+                                                    ),
+                                                  ),
+                                                ),
+                                        ),
+                                        if (_showAppleSignIn) ...[
+                                          const SizedBox(height: 12),
+                                          _LoginActionButton(
+                                            label: l10n.signInWithApple,
+                                            onPressed:
+                                                isLoading ? null : onAppleSignIn,
+                                            gradient: appBackgroundGradient,
                                             foregroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(26),
+                                            icon: const _AuthProviderBadge(
+                                              child: SizedBox(
+                                                width: 16,
+                                                height: 16,
+                                                child: CustomPaint(
+                                                  painter: AppleLogoPainter(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
+                                        ],
+                                      ],
                                     );
                                   },
                                 ),
@@ -297,6 +329,71 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       },
+    );
+  }
+}
+
+class _AuthProviderBadge extends StatelessWidget {
+  final Widget child;
+
+  const _AuthProviderBadge({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 28,
+      height: 28,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.18),
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white.withValues(alpha: 0.16)),
+      ),
+      child: child,
+    );
+  }
+}
+
+class _LoginActionButton extends StatelessWidget {
+  final String label;
+  final VoidCallback? onPressed;
+  final Gradient gradient;
+  final Color foregroundColor;
+  final Widget icon;
+
+  const _LoginActionButton({
+    required this.label,
+    required this.onPressed,
+    required this.gradient,
+    required this.foregroundColor,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 52,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(26),
+        ),
+        child: ElevatedButton.icon(
+          onPressed: onPressed,
+          icon: icon,
+          label: Text(label),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            disabledBackgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            foregroundColor: foregroundColor,
+            disabledForegroundColor: foregroundColor.withValues(alpha: 0.72),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(26),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

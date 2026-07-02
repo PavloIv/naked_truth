@@ -20,6 +20,8 @@
 "grantLocationAccess": "Надати доступ до локації",
 "loginFailed": "Не вдалося ввійти",
 "signIn": "Увійти",
+"signInWithGoogle": "Увійти через Google",
+"signInWithApple": "Увійти через Apple",
 "signingIn": "Вхід...",
 "welcome": "Вітаємо!",
 

@@ -20,6 +20,8 @@
   "grantLocationAccess": "Grant location access",
   "loginFailed": "Login failed",
   "signIn": "Sign In",
+  "signInWithGoogle": "Sign in with Google",
+  "signInWithApple": "Sign in with Apple",
   "signingIn": "Signing in...",
   "welcome": "Welcome!'",
 

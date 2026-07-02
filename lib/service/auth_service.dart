@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -38,19 +40,37 @@ class AuthService {
   Future<UserCredential> signInWithApple({
     Duration timeout = const Duration(seconds: 30),
   }) async {
+    final rawNonce = generateNonce();
+    final hashedNonce = _sha256OfString(rawNonce);
+
     final apple = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
+      nonce: hashedNonce,
     ).timeout(timeout);
 
+    final identityToken = apple.identityToken;
+    if (identityToken == null || identityToken.isEmpty) {
+      throw FirebaseAuthException(
+        code: 'missing-apple-id-token',
+        message: 'Apple Sign-In did not return an identity token.',
+      );
+    }
+
     final oauth = OAuthProvider('apple.com').credential(
-      idToken: apple.identityToken,
+      idToken: identityToken,
+      rawNonce: rawNonce,
       accessToken: apple.authorizationCode,
     );
 
     final cred = await _auth.signInWithCredential(oauth);
+    await _updateAppleProfileIfNeeded(
+      credential: cred,
+      givenName: apple.givenName,
+      familyName: apple.familyName,
+    );
 
     await _runStartupLogicSafely();
     return cred;
@@ -122,9 +142,34 @@ class AuthService {
     });
   }
 
+  Future<void> _updateAppleProfileIfNeeded({
+    required UserCredential credential,
+    String? givenName,
+    String? familyName,
+  }) async {
+    final user = credential.user;
+    if (user == null) return;
+
+    final appleDisplayName = [givenName, familyName]
+        .whereType<String>()
+        .map((part) => part.trim())
+        .where((part) => part.isNotEmpty)
+        .join(' ');
+
+    if (appleDisplayName.isNotEmpty && (user.displayName?.trim().isEmpty ?? true)) {
+      await user.updateDisplayName(appleDisplayName);
+      await user.reload();
+    }
+  }
+
   Future<void> handleStartupLogic() async {
     final user = currentUser;
     if (user == null) throw StateError('No authenticated user found');
     await _createUserIfMissing(user);
+  }
+
+  String _sha256OfString(String input) {
+    final bytes = utf8.encode(input);
+    return sha256.convert(bytes).toString();
   }
 }

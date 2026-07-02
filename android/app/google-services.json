@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "870984725053-a5sda84ml30okec0gvpgo1q1484eth80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ip.naked_truth",
+            "certificate_hash": "7e796ad390174736c5b776dfe6196e485366f5af"
+          }
+        },
+        {
+          "client_id": "870984725053-bcgsj8moct62l3pfoh3hhol5h21o1c5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ip.naked_truth",
+            "certificate_hash": "f7c0649f5c060a87a3e96a95298ee399797f40b5"
+          }
+        },
+        {
+          "client_id": "870984725053-c4clajdjhhdvuiqhl01ih0di10mdel5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ip.naked_truth",
+            "certificate_hash": "97f4580612bea55198196674c8afabd6f264da37"
+          }
+        },
+        {
           "client_id": "870984725053-e6ngh9e4g68sd72tc0apl4gg8pb1ui4u.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +53,14 @@
             {
               "client_id": "870984725053-e6ngh9e4g68sd72tc0apl4gg8pb1ui4u.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "870984725053-4kp8sjn5geakgcq9pv6q307n47f9njo2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ip.nakedTruth",
+                "app_store_id": "6760830584"
+              }
             }
           ]
         }
