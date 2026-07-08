@@ -19,6 +19,29 @@ class ChatPage extends StatelessWidget {
     required this.friendName,
   });
 
+  @override
+  Widget build(BuildContext context) {
+    return ChatConversation(
+      friendUid: friendUid,
+      friendName: friendName,
+    );
+  }
+}
+
+class ChatConversation extends StatelessWidget {
+  final String friendUid;
+  final String friendName;
+  final bool embedded;
+  final VoidCallback? onCollapse;
+
+  const ChatConversation({
+    super.key,
+    required this.friendUid,
+    required this.friendName,
+    this.embedded = false,
+    this.onCollapse,
+  });
+
   String _generateChatId(String uid1, String uid2) {
     final sorted = [uid1, uid2]..sort();
     return '${sorted[0]}_${sorted[1]}';
@@ -39,14 +62,25 @@ class ChatPage extends StatelessWidget {
         ..add(LoadMessages())
         ..add(ListenFriendStatus())
         ..add(ListenFriendReadStatus()),
-      child: _ChatView(friendName: friendName),
+      child: _ChatView(
+        friendName: friendName,
+        embedded: embedded,
+        onCollapse: onCollapse,
+      ),
     );
   }
 }
 
 class _ChatView extends StatefulWidget {
   final String friendName;
-  const _ChatView({required this.friendName});
+  final bool embedded;
+  final VoidCallback? onCollapse;
+
+  const _ChatView({
+    required this.friendName,
+    required this.embedded,
+    this.onCollapse,
+  });
 
   @override
   State<_ChatView> createState() => _ChatViewState();
@@ -55,6 +89,13 @@ class _ChatView extends StatefulWidget {
 class _ChatViewState extends State<_ChatView> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   void _send() {
     final text = _controller.text.trim();
@@ -77,169 +118,186 @@ class _ChatViewState extends State<_ChatView> {
   Widget build(BuildContext context) {
     final screenH = MediaQuery.of(context).size.height;
 
-    return BlocListener<ChatBloc, ChatState>(
+    final chatContent = BlocListener<ChatBloc, ChatState>(
       listenWhen: (prev, curr) => curr is ChatLoaded,
       listener: (context, state) {
-        // ✅ виконуємо MarkAsRead тільки після завантаження повідомлень
         context.read<ChatBloc>().add(MarkAsRead());
       },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Container(
-              height: screenH,
-              decoration: const BoxDecoration(gradient: appBackgroundGradient),
-            ),
-            SafeArea(
-              child: Column(
-                children: [
-                  BlocBuilder<ChatBloc, ChatState>(
-                    buildWhen: (p, c) => c is ChatLoaded,
-                    builder: (context, state) {
-                      String subtitle = '';
-                      if (state is ChatLoaded) {
-                        subtitle = state.isFriendOnline
-                            ? AppLocalizations.of(context)!.onlineInBrackets
-                            : state.friendLastSeen != null
-                            ? AppLocalizations.of(context)!.lastSeenAt(
-                                state.friendLastSeen!.hour
-                                    .toString()
-                                    .padLeft(2, '0'),
-                                state.friendLastSeen!.minute
-                                    .toString()
-                                    .padLeft(2, '0'),
-                              )
-                            : '';
-                      }
-                      return AppBar(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        leading: const BackButton(color: Colors.white),
-                        title: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              widget.friendName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            if (subtitle.isNotEmpty)
-                              Text(
-                                subtitle,
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                          ],
+      child: Column(
+        children: [
+          BlocBuilder<ChatBloc, ChatState>(
+            buildWhen: (p, c) => c is ChatLoaded,
+            builder: (context, state) {
+              String subtitle = '';
+              if (state is ChatLoaded) {
+                subtitle = state.isFriendOnline
+                    ? AppLocalizations.of(context)!.onlineInBrackets
+                    : state.friendLastSeen != null
+                    ? AppLocalizations.of(context)!.lastSeenAt(
+                        state.friendLastSeen!.hour.toString().padLeft(2, '0'),
+                        state.friendLastSeen!.minute.toString().padLeft(2, '0'),
+                      )
+                    : '';
+              }
+
+              if (widget.embedded) {
+                return _EmbeddedChatHeader(
+                  friendName: widget.friendName,
+                  subtitle: subtitle,
+                  onCollapse: widget.onCollapse,
+                );
+              }
+
+              return AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: const BackButton(color: Colors.white),
+                title: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.friendName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    if (subtitle.isNotEmpty)
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                         ),
-                        centerTitle: true,
+                      ),
+                  ],
+                ),
+                centerTitle: true,
+              );
+            },
+          ),
+          Expanded(
+            child: BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                if (state is ChatLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  );
+                }
+                if (state is ChatLoaded && state.messages.isNotEmpty) {
+                  return ListView.builder(
+                    reverse: true,
+                    controller: _scrollController,
+                    padding: EdgeInsets.fromLTRB(
+                      16,
+                      widget.embedded ? 8 : 12,
+                      16,
+                      widget.embedded ? 8 : 16,
+                    ),
+                    itemCount: state.messages.length,
+                    itemBuilder: (context, index) {
+                      final msg = state.messages[index];
+                      final isMe =
+                          msg.senderId == FirebaseAuth.instance.currentUser!.uid;
+                      final isRead = isMe &&
+                          state.friendLastRead != null &&
+                          msg.timestamp.isBefore(state.friendLastRead!);
+
+                      return _MessageBubble(
+                        text: msg.text,
+                        time: _formatTime(msg.timestamp),
+                        isMe: isMe,
+                        isRead: isRead,
                       );
                     },
-                  ),
-
-                  Expanded(
-                    child: BlocBuilder<ChatBloc, ChatState>(
-                      builder: (context, state) {
-                        if (state is ChatLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(color: Colors.white),
-                          );
-                        }
-                        if (state is ChatLoaded && state.messages.isNotEmpty) {
-                          return ListView.builder(
-                            reverse: true,
-                            controller: _scrollController,
-                            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-                            itemCount: state.messages.length,
-                            itemBuilder: (context, index) {
-                              final msg = state.messages[index];
-                              final isMe = msg.senderId ==
-                                  FirebaseAuth.instance.currentUser!.uid;
-                              final isRead = isMe &&
-                                  state.friendLastRead != null &&
-                                  msg.timestamp.isBefore(state.friendLastRead!);
-
-                              return _MessageBubble(
-                                text: msg.text,
-                                time: _formatTime(msg.timestamp),
-                                isMe: isMe,
-                                isRead: isRead,
-                              );
-                            },
-                          );
-                        }
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 32),
-                            child: Text(
-                              AppLocalizations.of(context)!.startConversation,
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      },
+                  );
+                }
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      AppLocalizations.of(context)!.startConversation,
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-
-                  const Divider(height: 1, color: Colors.white24),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                    child: SafeArea(
-                      top: false,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: settingTitleGradient,
-                          borderRadius: BorderRadius.circular(22),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                controller: _controller,
-                                textInputAction: TextInputAction.send,
-                                onSubmitted: (_) => _send(),
-                                style: const TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                  hintText: AppLocalizations.of(context)!
-                                      .enterMessage,
-                                  hintStyle: const TextStyle(
-                                    color: Colors.white70,
-                                  ),
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12),
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.send, color: Colors.white),
-                              onPressed: _send,
-                              splashRadius: 22,
-                            ),
-                          ],
+                );
+              },
+            ),
+          ),
+          const Divider(height: 1, color: Colors.white24),
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              16,
+              widget.embedded ? 8 : 10,
+              16,
+              widget.embedded ? 12 : 10,
+            ),
+            child: SafeArea(
+              top: false,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: settingTitleGradient,
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        textInputAction: TextInputAction.send,
+                        onSubmitted: (_) => _send(),
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.enterMessage,
+                          hintStyle: const TextStyle(
+                            color: Colors.white70,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    IconButton(
+                      icon: const Icon(Icons.send, color: Colors.white),
+                      onPressed: _send,
+                      splashRadius: 22,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+
+    if (widget.embedded) {
+      return chatContent;
+    }
+
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          Container(
+            height: screenH,
+            decoration: const BoxDecoration(gradient: appBackgroundGradient),
+          ),
+          SafeArea(child: chatContent),
+        ],
       ),
     );
   }
@@ -312,6 +370,90 @@ class _MessageBubble extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EmbeddedChatHeader extends StatelessWidget {
+  final String friendName;
+  final String subtitle;
+  final VoidCallback? onCollapse;
+
+  const _EmbeddedChatHeader({
+    required this.friendName,
+    required this.subtitle,
+    required this.onCollapse,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 44,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(15, 6, 15, 6),
+        decoration: const BoxDecoration(
+          gradient: purpleGradient,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
+        ),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 32,
+              height: 32,
+              child: Icon(
+                Icons.mail_outline_rounded,
+                color: Colors.white,
+                size: 18,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      friendName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  if (subtitle.isNotEmpty)
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 6),
+                        child: Text(
+                          subtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: onCollapse,
+              icon: const Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              splashRadius: 18,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints.tightFor(width: 28, height: 28),
+            ),
+          ],
         ),
       ),
     );
